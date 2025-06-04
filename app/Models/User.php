@@ -52,11 +52,12 @@ class User extends Model implements AuthenticatableContract
     }
 
     /**
-     * Relasi ke Keranjang Belanja.
-     * Seorang pengguna memiliki satu keranjang belanja.
+     * ini relasi untuk si ke Keranjang Belanja.
+     * nanti pas user memiliki satu keranjang belanja.
      */
     public function shoppingCart(): HasOne
     {
         return $this->hasOne(ShoppingCart::class);
     }
 }
+#
