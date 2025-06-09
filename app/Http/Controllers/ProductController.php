@@ -1,85 +1,122 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Product;
 use App\Models\Shop;
-use App\Models\OrderItem;
-use App\Models\Review;
-
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth; // <-- Import class Auth
 
 class ProductController extends Controller
 {
-    public function getProducts() {
-        $productData = Product::paginate(10);
-        return view('product.getProductsAdmin', ['productData' => $productData]);
+    /**
+     * Menampilkan halaman daftar semua produk (untuk user biasa atau admin).
+     * Ini menggantikan getProducts() dan productsUser().
+     */
+    public function index()
+    {
+        // Mengambil produk terbaru, 12 per halaman
+        $products = Product::latest()->paginate(12);
+        
+        // Menggunakan satu view yang sama: 'products.index'
+        return view('products.index', ['products' => $products]);
     }
 
-    public function productsUser(){
-        $productData = Product::paginate(12);
-        return view('product.userProducts', ['productData' => $productData]);
+    /**
+     * Menampilkan halaman form untuk membuat produk baru.
+     * Menggantikan createProduct().
+     */
+    public function create()
+    {
+        return view('products.create');
     }
 
-    public function getProduct($id){
-        $product = Product::find($id);
-        $orderitem = OrderItem::find($id);
+    /**
+     * Menyimpan produk baru yang dikirim dari form.
+     * Ini menggantikan newProduct().
+     */
+    public function store(Request $request)
+    {
+        // 1. Validasi input. Nama input di form HARUS 'name', 'description', dll.
+        $validatedData = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'price' => ['required', 'integer', 'min:0'],
+            'stock' => ['required', 'integer', 'min:0'],
+            // 'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'] // Contoh jika ada upload gambar
+        ]);
 
-        if (!$product) {
-            return response('Product not found');
+        // 2. [AMAN] Mengambil Shop ID milik user yang sedang login.
+        $shop = Shop::where('owner_id', auth()->id())->first();
+
+        // Jika user tidak punya toko, gagalkan.
+        if (!$shop) {
+            return redirect()->back()->with('error', 'Anda harus memiliki toko untuk menambahkan produk.');
         }
-        
-        return view('product.detailProduct', ['product' => $product, 'orderitem' => $orderitem]);
-    }
 
-    public function newProduct (Request $request) {
-        $productData = $request->validate([
-            'productName' => ['required', 'string'],
-            'Description' => ['required', 'string'],
-            'Price' => ['required', 'decimal:0'],
-            'Stock' => ['required', 'integer'],
-        ]);
-        
-        $userId = $request->session()->get('user_id');
-        $shopID = Shop::where('owner_id', $userId)->value('id');
+        // 3. Menambahkan shop_id ke data yang sudah divalidasi.
+        $validatedData['shop_id'] = $shop->id;
 
-        $newData = Product::create([
-            'name' => $productData['productName'],
-            'description' => $productData['Description'],
-            'price' => $productData['Price'],
-            'stock' => $productData['Stock'],
-            'shop_id'=> $shopID
-        ]);
+        // 4. Membuat produk baru di database.
+        Product::create($validatedData);
     
-        return redirect()->back()->with('success', 'Product Add Successfully');
+        return redirect()->route('home')->with('success', 'Produk berhasil ditambahkan!'); // Redirect ke homepage
     }
     
-    public function createProduct(Product $product, Request $request){
-        return view('product.createProduct', ['product' => $product]);
-    }
-
-    public function updateProduct(Product $product, Request $request){
-        $productData = $request->validate([
-            'name' => 'required | string',
-            'description' => 'required | string',
-            'price' => 'required | decimal:0',
-            'stock' => 'required | integer'
-        ]);
-        $product->update($productData);
-        return redirect()->back()->with('success', 'Item Updated Successfully');
-    }
-
-    public function adminEditProduct(Product $product, Request $request){
-        return view('product.editProductAdmin', ['product' => $product]);
-    }
-
-    public function editProduct(Product $product, Request $request){
-        return view('product.updateProduct', ['product' => $product]);
-    }
-
-    public function deleteProduct (Product $product) {
+    /**
+     * Menampilkan halaman detail satu produk.
+     * Menggantikan getProduct().
+     */
+    public function show(Product $product) // <-- Menggunakan Route Model Binding
+    {
+        // $product sudah otomatis diambil oleh Laravel. Tidak perlu Product::find().
         
+        // Contoh cara mengambil data relasi di masa depan:
+        // $reviews = $product->reviews()->latest()->get();
+
+        return view('products.show', ['product' => $product]);
+    }
+
+    /**
+     * Menampilkan halaman form untuk mengedit produk.
+     * Menggantikan editProduct() dan adminEditProduct().
+     */
+    public function edit(Product $product) // <-- Menggunakan Route Model Binding
+    {
+        // Di aplikasi nyata, kamu bisa menambahkan otorisasi di sini
+        // cth: if (auth()->user()->cannot('update', $product)) { abort(403); }
+
+        return view('products.edit', ['product' => $product]);
+    }
+
+    /**
+     * Mengupdate data produk di database.
+     */
+    public function update(Request $request, Product $product) // <-- Menggunakan Route Model Binding
+    {
+        // Validasi data yang masuk
+        $validatedData = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'price' => ['required', 'integer', 'min:0'],
+            'stock' => ['required', 'integer', 'min:0'],
+        ]);
+
+        // Update produk
+        $product->update($validatedData);
+
+        return redirect()->route('home')->with('success', 'Produk berhasil diperbarui!');
+    }
+
+    /**
+     * Menghapus produk dari database.
+     * Menggantikan deleteProduct().
+     */
+    public function destroy(Product $product) // <-- Menggunakan Route Model Binding
+    {
+        // Di aplikasi nyata, kamu bisa menambahkan otorisasi di sini
         $product->delete();
-        return redirect()->back()->with('success', 'Delete successfully');
-    }
 
+        return redirect()->route('home')->with('success', 'Produk berhasil dihapus!');
+    }
 }
