@@ -49,3 +49,10 @@ Route::middleware('auth')->group(function () {
         return view('order.failed', compact('order'));
     })->name('order.failed');
 });
+Route::get('/notfound', function () {
+    return response()->view('errors.404', [], 404);
+})->name('notfound');
+
+Route::get('/error', function () {
+    return response()->view('errors.404', [], 404);
+})->name('error');
