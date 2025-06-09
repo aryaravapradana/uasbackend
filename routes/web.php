@@ -6,19 +6,17 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShoppingCartController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\OrderController; 
 
 Route::get('/', [ProductController::class, 'index'])->name('home');
 
-Route::get('/products/search', [ProductController::class, 'search'])->name('product.search'); 
+Route::resource('products', ProductController::class);
 
-Route::resource('products', ProductController::class); 
+Route::get('/search', [ProductController::class, 'search'])->name('product.search');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
-    // Sign Up
-    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register'); 
-    Route::post('/register', [AuthController::class, 'register']); 
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
@@ -35,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/cart', [ShoppingCartController::class, 'index'])->name('cart.index');
     Route::post('/cart/add', [ShoppingCartController::class, 'store'])->name('cart.store');
     Route::delete('/cart/{id}', [ShoppingCartController::class, 'destroy'])->name('cart.destroy');
+
     Route::patch('/cart/{id}/update-quantity', [ShoppingCartController::class, 'updateQuantity'])->name('cart.update_quantity');
 
     Route::post('/checkout', [ShoppingCartController::class, 'checkout'])->name('cart.checkout');
@@ -46,12 +45,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/order/failed/{order}', function (\App\Models\Order $order) {
         return view('order.failed', compact('order'));
     })->name('order.failed');
+
+    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 });
-
-Route::get('/notfound', function () {
-    return response()->view('errors.404', [], 404);
-})->name('notfound');
-
-Route::get('/error', function () {
-    return response()->view('errors.404', [], 404);
-})->name('error');
