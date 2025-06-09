@@ -15,7 +15,6 @@ class OrderController extends Controller
         }
 
         $order->load(['items.product', 'payment']);
-
         return view('order.show', compact('order'));
     }
 }
