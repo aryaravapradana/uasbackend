@@ -8,9 +8,10 @@ use App\Http\Controllers\ShoppingCartController;
 use App\Http\Controllers\PaymentController;
 
 Route::get('/', [ProductController::class, 'index'])->name('home');
-Route::get('/products/search', [ProductController::class, 'search'])->name('products.search');
-Route::resource('products', ProductController::class);
-Route::get('/products/search', [ProductController::class, 'search'])->name('products.search');
+
+Route::get('/products/search', [ProductController::class, 'search'])->name('product.search'); 
+
+Route::resource('products', ProductController::class); 
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -18,7 +19,6 @@ Route::middleware('guest')->group(function () {
     // Sign Up
     Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register'); 
     Route::post('/register', [AuthController::class, 'register']); 
-
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
         return view('order.failed', compact('order'));
     })->name('order.failed');
 });
+
 Route::get('/notfound', function () {
     return response()->view('errors.404', [], 404);
 })->name('notfound');
