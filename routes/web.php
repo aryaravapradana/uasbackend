@@ -26,7 +26,8 @@ Route::get('/', [ProductController::class, 'index'])->name('home');
 // - DELETE /products/{product}    (untuk method 'destroy')
 Route::resource('products', ProductController::class);
 
-
+// --- RUTE PENCARIAN PRODUK ---
+Route::get('/search', [ProductController::class, 'search'])->name('product.search');
 // --- RUTE AUTENTIKASI (LOGIN, LOGOUT) ---
 
 // Middleware 'guest' memastikan halaman ini hanya bisa diakses oleh pengguna yang BELUM LOGIN.

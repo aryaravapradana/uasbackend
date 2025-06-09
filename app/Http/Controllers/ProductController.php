@@ -119,4 +119,19 @@ class ProductController extends Controller
 
         return redirect()->route('home')->with('success', 'Produk berhasil dihapus!');
     }
+
+    /**
+     * Mencari produk berdasarkan nama.
+     * Menggantikan searchProduct().
+     */
+    
+  public function search(Request $request)
+{
+    $query = $request->input('q');
+    $products = \App\Models\Product::where('name', 'like', "%{$query}%")
+        ->orWhere('description', 'like', "%{$query}%")
+        ->get();
+
+    return view('products.search', compact('products', 'query'));
+    }
 }
