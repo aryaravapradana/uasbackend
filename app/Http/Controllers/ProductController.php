@@ -126,12 +126,17 @@ class ProductController extends Controller
      */
     
   public function search(Request $request)
-{
-    $query = $request->input('q');
-    $products = \App\Models\Product::where('name', 'like', "%{$query}%")
-        ->orWhere('description', 'like', "%{$query}%")
-        ->get();
+    {
+        $query = $request->input('q');
+        $products = \App\Models\Product::where('name', 'like', '%' . $query . '%')
+                                   ->orWhere('description', 'like', '%' . $query . '%')
+                                   ->get();
 
-    return view('products.search', compact('products', 'query'));
+        // Tambahkan baris-baris ini:
+        if ($products->isEmpty()) {
+            abort(404);
+        }
+
+        return view('products.search', compact('products', 'query'));
     }
 }
