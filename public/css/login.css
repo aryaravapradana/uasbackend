@@ -1,0 +1,127 @@
+/* =================================================================
+   TOKO CLONE - LOGIN PAGE STYLESHEET (Versi Perbaikan)
+   ================================================================= */
+
+/* Impor Font dari Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* Variabel Warna & Properti Dasar */
+:root {
+    --primary-green: #4F9D4D;
+    --primary-green-dark: #418240;
+    --text-dark: #31353B;
+    --text-light: #6D7588;
+    --bg-light: #F3F4F6;
+    --border-color: #D1D5DB;
+    --white: #FFFFFF;
+    --error-color: #e3342f;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-light);
+    /* Dihapus: Properti centering agar container bisa stretch */
+    /* display: flex; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    min-height: 100vh;
+    /* padding: 2rem; */ /* Dihapus */
+}
+
+/* Container Utama */
+.auth-container {
+    display: flex;
+    width: 100%; /* Diubah: Lebar 100% dari layar */
+    height: 100vh; /* Diubah: Tinggi 100% dari layar */
+    background-color: var(--white);
+    /* Properti di bawah ini tidak lagi diperlukan untuk layout full-screen */
+    /* max-width: 1100px; */
+    /* min-height: 700px; */
+    /* border-radius: 24px; */
+    /* box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15); */
+    overflow: hidden;
+}
+
+/* Panel Kiri (Informasi & Branding) */
+.info-panel {
+    flex: 1;
+    background-color: var(--primary-green);
+    color: var(--white);
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.info-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FFFFFF' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+}
+
+.info-content {
+    position: relative;
+    z-index: 2;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* === PERBAIKAN UNTUK LOGO === */
+.info-content .logo {
+    max-width: 220px; /* Atur lebar maksimal logo */
+    height: auto; /* Jaga rasio aspek gambar */
+    margin-bottom: 2.5rem; /* Beri jarak ke tulisan di bawahnya */
+    display: block; /* Pastikan logo berada di barisnya sendiri */
+}
+
+.info-content h1 {
+    font-size: 3.2rem; /* <-- Diperbesar */
+    line-height: 1.3;
+    margin-bottom: 2rem;
+}
+
+.info-content .project-info {
+    font-size: 1rem; /* <-- Sedikit diperbesar agar lebih jelas */
+    line-height: 1.8;
+    border-left: 3px solid var(--white);
+    padding-left: 1.5rem;
+    opacity: 0.9;
+}
+
+/* Panel Kanan (Form Login) */
+.form-panel {
+    flex: 1.2;
+    padding: 60px 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--white); /* Pastikan panel kanan putih */
+}
+
+/* ... (Sisa kode CSS tidak perlu diubah) ... */
+.form-content { width: 100%; max-width: 400px; margin: 0 auto; }
+.form-content h2 { font-size: 2.2rem; color: var(--text-dark); margin-bottom: 1rem; animation: fadeInUp 0.8s ease-out 0.1s; animation-fill-mode: both; }
+.form-content .form-group { margin-bottom: 25px; animation: fadeInUp 0.8s ease-out 0.2s; animation-fill-mode: both; }
+.form-content label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text-dark); }
+.form-content input { width: 100%; padding: 14px 18px; border: 1px solid var(--border-color); border-radius: 8px; font-family: 'Poppins', sans-serif; font-size: 1rem; transition: all 0.3s ease; }
+.form-content input:focus { outline: none; border-color: var(--primary-green); box-shadow: 0 0 0 3px rgba(79, 157, 77, 0.2); }
+.password-wrapper { position: relative; }
+#toggle-password { position: absolute; top: 50%; right: 18px; transform: translateY(-50%); cursor: pointer; color: var(--text-light); }
+.form-content .login-button { width: 100%; padding: 16px; background-color: var(--primary-green); border: none; border-radius: 8px; color: white; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; animation: fadeInUp 0.8s ease-out 0.3s; animation-fill-mode: both; }
+.form-content .login-button:hover { background-color: var(--primary-green-dark); transform: translateY(-3px); box-shadow: 0 7px 20px rgba(79, 157, 77, 0.3); }
+.form-footer { text-align: center; margin-top: 2rem; color: var(--text-light); font-size: 0.9rem; animation: fadeInUp 0.8s ease-out 0.4s; animation-fill-mode: both; }
+.form-footer a { color: var(--primary-green); font-weight: 600; text-decoration: none; }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 992px) { .info-panel { display: none; } .form-panel { flex: 1; padding: 40px; } .auth-container { height: auto; min-height: 100vh; } }
