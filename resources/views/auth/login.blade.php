@@ -53,7 +53,7 @@
         button { 
             width: 100%; 
             padding: 0.75rem; 
-            background-color: #3490dc; 
+            background-color: #03AC0E; 
             color: white; 
             border: none; 
             border-radius: 4px; 
@@ -62,17 +62,15 @@
             font-weight: bold;
         }
         button:hover {
-            background-color: #2779bd;
+            background-color: #02820B;
         }
     </style>
 </head>
 <body>
     <div class="login-card">
         <h2>Login ke Akun Anda</h2>
-        
-        {{-- Formulir ini akan mengirim data ke Rute 'POST /login' yang sudah kita buat --}}
         <form action="/login" method="POST">
-            @csrf  {{-- WAJIB ADA! Untuk keamanan dari Cross-Site Request Forgery --}}
+            @csrf  
 
             <div class="form-group">
                 <label for="email">Alamat Email</label>
@@ -83,14 +81,17 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            
-            {{-- Bagian ini akan menampilkan pesan error jika validasi di AuthController gagal --}}
+
             @error('email')
                 <div class="error-message">{{ $message }}</div>
             @enderror
-
             <button type="submit">Login</button>
         </form>
+        {{-- Kode ini untuk ngelink ke register --}}
+        <div class="register-link">
+            Belum punya akun? <a href="{{ route('register') }}">Daftar sekarang!</a>
+        </div>
+        
     </div>
 </body>
 </html>
