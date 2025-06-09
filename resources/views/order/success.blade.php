@@ -18,7 +18,7 @@
         <p class="text-gray-600 text-lg mb-8">Terima kasih atas pesanan Anda. Pesanan Anda dengan ID #{{ $order->id }} telah berhasil dibayar.</p>
         <div class="space-y-4">
             <a href="{{ route('home') }}" class="inline-block bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors duration-300">Kembali ke Beranda</a>
-            <a href="#" class="inline-block bg-gray-300 text-gray-800 py-2 px-4 rounded-md hover:bg-gray-400 transition-colors duration-300">Lihat Detail Pesanan</a>
+            <a href="{{ route('orders.show', $order->id) }}" class="inline-block bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 transition-colors duration-300">Lihat Detail Pesanan</a>
         </div>
     </div>
 </body>
