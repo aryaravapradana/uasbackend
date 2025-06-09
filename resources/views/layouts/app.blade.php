@@ -17,6 +17,7 @@
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             @include('layouts.navigation')
+            @include('layouts.navbar') <!-- Form search kamu harus ada di file ini -->
 
             <!-- Page Heading -->
             @isset($header)
@@ -28,8 +29,8 @@
             @endisset
 
             <!-- Page Content -->
-            <main>
-                {{ $slot }}
+             <main>
+                 @yield('content')
             </main>
         </div>
     </body>
