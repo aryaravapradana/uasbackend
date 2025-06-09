@@ -1,310 +1,171 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Keranjang Saya</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage - Tokopedia Clone</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f2f3f5;
+        body { 
+            font-family: system-ui, -apple-system, sans-serif; 
+            background-color: #f4f5f7;
             margin: 0;
-            padding: 20px;
-        }
-        .cart-container {
-            background: #fff;
-            border-radius: 10px;
-            padding: 20px;
-            max-width: 900px;
-            margin: auto;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-        .cart-title {
-            font-size: 28px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .cart-item {
-            display: flex;
-            align-items: center;
-            padding: 15px 0;
-            border-top: 1px solid #eee;
-        }
-        .cart-item:first-child {
-            border-top: none;
-        }
-        .cart-item img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-right: 20px;
-        }
-        .cart-details {
-            flex: 1;
-        }
-        .cart-details h4 {
-            margin: 0;
-            font-size: 18px;
-            font-weight: 600;
-        }
-        .cart-details p {
-            margin: 5px 0;
-            color: #666;
-            font-size: 14px;
-        }
-        .cart-actions {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            min-width: 150px;
-        }
-        .price {
-            font-size: 18px;
-            font-weight: bold;
-            color: #e44d26;
-        }
-        .qty {
-            margin-top: 10px;
-            display: flex;
-            gap: 5px;
-            align-items: center;
-        }
-        .qty button {
-            padding: 5px 10px;
-            border: 1px solid #ccc;
-            background: #f9f9f9;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .qty span {
-            min-width: 20px;
-            text-align: center;
-        }
-        .remove-btn {
-            margin-top: 10px;
-            font-size: 13px;
-            color: red;
-            border: none;
-            background: none;
-            cursor: pointer;
-            text-decoration: underline;
         }
 
-        .cart-summary {
-            border-top: 2px solid #eee;
-            padding-top: 20px;
-            margin-top: 20px;
-            text-align: right;
+        header {
+            background-color: #fff;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
-        .cart-summary .total-amount {
-            font-size: 22px;
+        header .logo { font-size: 1.5rem; font-weight: bold; }
+        header .user-nav { display: flex; align-items: center; gap: 1rem; }
+        header .user-nav form { margin: 0; }
+        header .user-nav button {
+            background: none;
+            border: 1px solid #e3342f;
+            color: #e3342f;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
             font-weight: bold;
-            color: #e44d26;
         }
-        .checkout-form {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
+        header .user-nav button:hover { background-color: #e3342f; color: #fff; }
+
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        h1 { text-align: center; color: #333; }
+
+        /* Search Form Style */
+        .search-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
         }
-        .checkout-form h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
+
+        .search-wrapper form {
+            display: flex;
+            width: 60%;
+            max-width: 600px;
         }
-        .checkout-form label {
+
+        .search-wrapper input[type="text"] {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-top-left-radius: 6px;
+            border-bottom-left-radius: 6px;
+            outline: none;
+        }
+
+        .search-wrapper button {
+            padding: 0.75rem 1.5rem;
+            background-color: #2f80ed;
+            color: white;
+            border: none;
+            font-weight: bold;
+            border-top-right-radius: 6px;
+            border-bottom-right-radius: 6px;
+            cursor: pointer;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: left;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 4/3;
+            object-fit: cover;
             display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
+        }
+
+        .product-info {
+            padding: 1rem;
+        }
+
+        .product-info h3 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.1rem;
             color: #333;
         }
-        .checkout-form input[type="text"],
-        .checkout-form textarea {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        .checkout-form textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-        .checkout-btn {
-            background-color: #4CAF50;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 18px;
+
+        .product-info .price {
+            color: #e44d26;
             font-weight: bold;
-            width: 100%;
-            box-sizing: border-box;
-            transition: background-color 0.3s ease;
-        }
-        .checkout-btn:hover {
-            background-color: #45a049;
-        }
-        .flash-message {
-            padding: 10px 20px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            font-weight: bold;
-        }
-        .flash-message.success {
-            background-color: #d4edda;
-            color: #155724;
-            border-color: #c3e6cb;
-        }
-        .flash-message.error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border-color: #f5c6cb;
+            font-size: 1.2rem;
         }
 
-        @media (max-width: 600px) {
-            .cart-item {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .cart-item img {
-                margin-bottom: 10px;
-            }
-            .cart-details {
-                width: 100%;
-                margin-bottom: 10px;
-            }
-            .cart-actions {
-                width: 100%;
-                align-items: flex-start;
-            }
+        .product-card-link {
+            text-decoration: none;
+            color: inherit;
         }
     </style>
 </head>
 <body>
-    <div class="cart-container">
-        <div class="cart-title">Keranjang</div>
 
-        @if (session('success'))
-            <div class="flash-message success">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        @if (session('error'))
-            <div class="flash-message error">
-                {{ session('error') }}
-            </div>
-        @endif
-
-        @if($cartItems->isEmpty())
-            <p>Keranjang kamu kosong.</p>
-        @else
-            @foreach ($cartItems as $item)
-                <div class="cart-item">
-                    <img src="{{ $item->product->image_url ?? 'https://placehold.co/80x80/cccccc/333333?text=Produk' }}" alt="gambar produk">
-                    <div class="cart-details">
-                        <h4>{{ $item->product->name ?? 'Produk Tidak Ditemukan' }}</h4>
-                        <p>{{ $item->product->description ?? 'Deskripsi tidak tersedia.' }}</p>
-                    </div>
-                    <div class="cart-actions">
-                        <div class="price" id="item-total-{{ $item->id }}">
-                            Rp {{ number_format($item->quantity * ($item->product->price ?? 0), 0, ',', '.') }}
-                        </div>
-                        <div class="qty">
-                            <button class="update-qty-btn" data-id="{{ $item->id }}" data-action="decrease">-</button>
-                            <span id="quantity-{{ $item->id }}">{{ $item->quantity }}</span>
-                            <button class="update-qty-btn" data-id="{{ $item->id }}" data-action="increase">+</button>
-                        </div>
-                        <form action="{{ route('cart.destroy', $item->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="remove-btn">Hapus</button>
-                        </form>
-                    </div>
-                </div>
-            @endforeach
-
-            <div class="cart-summary">
-                <p>Total Belanja:</p>
-                <div class="total-amount" id="overall-total-amount">
-                    Rp {{ number_format($totalAmount, 0, ',', '.') }}
-                </div>
-            </div>
-
-            <div class="checkout-form">
-                <h3>Informasi Pengiriman</h3>
-                <form action="{{ route('cart.checkout') }}" method="POST">
+    <header>
+        <div class="logo">Tokopedia</div>
+        <nav class="user-nav">
+        <a href="{{ route('cart.index') }}">🛒</a> {{-- <<== Tambahan Link ke Halaman Keranjang --}}
+            @auth
+                <span>Selamat datang, {{ auth()->user()->name }}</span>
+                <form action="{{ route('logout') }}" method="POST">
                     @csrf
-                    <label for="address">Alamat Lengkap:</label>
-                    <textarea id="address" name="address" required>{{ old('address', Auth::user()->address ?? '') }}</textarea>
-                    @error('address')
-                        <p style="color: red; font-size: 0.8em; margin-top: -10px; margin-bottom: 10px;">{{ $message }}</p>
-                    @enderror
-
-                    <label for="phone">Nomor Telepon:</label>
-                    <input type="text" id="phone" name="phone" required value="{{ old('phone', Auth::user()->phone ?? '') }}">
-                    @error('phone')
-                        <p style="color: red; font-size: 0.8em; margin-top: -10px; margin-bottom: 10px;">{{ $message }}</p>
-                    @enderror
-
-                    <label for="notes">Catatan (Opsional):</label>
-                    <textarea id="notes" name="notes">{{ old('notes') }}</textarea>
-
-                    <button type="submit" class="checkout-btn">Lanjutkan ke Pembayaran</button>
+                    <button type="submit">Logout</button>
                 </form>
-            </div>
-        @endif
-    </div>
+            @else
+                <a href="{{ route('login') }}">Login</a>
+            @endauth
+        </nav>
+    </header>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const csrfToken = document.querySelector('meta[name="csrf-token"]') ? document.querySelector('meta[name="csrf-token"]').content : '';
+    <main class="container">
 
-            document.querySelectorAll('.update-qty-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const itemId = this.dataset.id;
-                    const action = this.dataset.action;
-                    const quantitySpan = document.getElementById(`quantity-${itemId}`);
-                    let currentQuantity = parseInt(quantitySpan.textContent);
+        <!-- FORM SEARCH PRODUK (TENGAH ATAS) -->
+        <div class="search-wrapper">
+            <form action="{{ route('product.search') }}" method="GET">
+                <input type="text" name="q" placeholder="Cari produk..." required>
+                <button type="submit">Cari</button>
+            </form>
+        </div>
 
-                    let newQuantity;
-                    if (action === 'increase') {
-                        newQuantity = currentQuantity + 1;
-                    } else if (action === 'decrease') {
-                        newQuantity = currentQuantity - 1;
-                        if (newQuantity < 1) {
-                            newQuantity = 1;
-                        }
-                    }
+        <h1>Produk Terbaru</h1>
 
-                    fetch(`/cart/${itemId}/update-quantity`, {
-                        method: 'PATCH',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': csrfToken,
-                            'Accept': 'application/json'
-                        },
-                        body: JSON.stringify({ quantity: newQuantity })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.message) {
-                            console.log(data.message);
-                            quantitySpan.textContent = data.new_quantity;
-                            document.getElementById(`item-total-${itemId}`).textContent = `Rp ${data.new_item_total}`;
-                            document.getElementById('overall-total-amount').textContent = `Rp ${data.overall_total_amount}`;
-                        } else if (data.error) {
-                            console.error('Error:', data.error);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error updating quantity:', error);
-                    });
-                });
-            });
-        });
-    </script>
+        <div class="product-grid">
+            @foreach ($products as $product)
+                <a href="{{ route('products.show', $product) }}" class="product-card-link">
+                    <div class="product-card">
+                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}">
+                        <div class="product-info">
+                            <h3>{{ $product->name }}</h3>
+                            <p class="price">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                        </div>
+                    </div>
+                </a>
+            @endforeach
+        </div>
+
+    </main>
+
 </body>
 </html>
