@@ -5,22 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class ShoppingCart extends Model
 {
     use HasFactory;
 
+    /**
+     * Kolom yang diizinkan untuk mass assignment.
+     */
     protected $fillable = [
-        'user_id', // Foreign key untuk pengguna pemilik keranjang
-        // Tambahkan kolom lain sesuai kebutuhan, misal:
-        // 'session_id', // Untuk guest cart
-        // 'status', // Misal: active, abandoned
+        'user_id',
+        'product_id',
+        'quantity',
     ];
 
     /**
-     * Relasi ke Pengguna.
-     * Satu keranjang belanja dimiliki oleh satu pengguna.
+     * Relasi: satu keranjang milik satu user.
      */
     public function user(): BelongsTo
     {
@@ -28,16 +28,10 @@ class ShoppingCart extends Model
     }
 
     /**
-     * Relasi ke Produk (Many-to-Many).
-     * Keranjang belanja bisa memiliki banyak produk.
-     * Ini biasanya melalui tabel pivot 'cart_product' atau 'shopping_cart_items'.
+     * Relasi: setiap entri keranjang mengacu ke satu produk.
      */
-    public function products(): BelongsToMany
+    public function product(): BelongsTo
     {
-        // Asumsi ada tabel pivot 'cart_product' dengan 'shopping_cart_id' dan 'product_id'
-        // Kamu mungkin perlu membuat model CartItem untuk detail seperti quantity.
-        return $this->belongsToMany(Product::class, 'cart_product')
-                    ->withPivot('quantity', 'price') // Contoh jika ada detail di pivot
-                    ->withTimestamps();
+        return $this->belongsTo(Product::class);
     }
 }

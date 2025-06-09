@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ShoppingCartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -11,45 +12,59 @@ use App\Http\Controllers\ProductController;
 |--------------------------------------------------------------------------
 */
 
-// --- RUTE UTAMA & PRODUK ---
+// =============================
+// RUTE UTAMA & PRODUK
+// =============================
 
-// Homepage utama sekarang menampilkan daftar semua produk dari ProductController method 'index'
+// Halaman utama menampilkan semua produk
 Route::get('/', [ProductController::class, 'index'])->name('home');
 
-// Menggunakan Route::resource untuk membuat semua rute CRUD produk secara otomatis.
-// Ini akan membuat rute seperti:
-// - GET /products/{product}       (untuk method 'show')
-// - GET /products/create          (untuk method 'create')
-// - POST /products                (untuk method 'store')
-// - GET /products/{product}/edit  (untuk method 'edit')
-// - PUT/PATCH /products/{product} (untuk method 'update')
-// - DELETE /products/{product}    (untuk method 'destroy')
+// Semua aksi CRUD untuk produk (kecuali jika ada yang dikecualikan)
 Route::resource('products', ProductController::class);
 
-// --- RUTE PENCARIAN PRODUK ---
+// Fitur pencarian produk
 Route::get('/search', [ProductController::class, 'search'])->name('product.search');
-// --- RUTE AUTENTIKASI (LOGIN, LOGOUT) ---
 
-// Middleware 'guest' memastikan halaman ini hanya bisa diakses oleh pengguna yang BELUM LOGIN.
-Route::middleware('guest')->group(function() {
+// =============================
+// RUTE AUTENTIKASI
+// =============================
+
+// Form login & proses login (hanya untuk guest / belum login)
+Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
-    // Jika kamu butuh halaman registrasi, bisa ditambahkan di sini.
 });
 
-// Rute untuk logout hanya bisa diakses oleh user yang SUDAH LOGIN
+// Logout (hanya bisa jika user sudah login)
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
-
-// --- RUTE BAWAAN LARAVEL (DASHBOARD & PROFILE) ---
-// Rute-rute ini bisa kamu simpan jika masih ingin menggunakannya.
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// =============================
+// RUTE DASHBOARD & PROFILE
+// =============================
 
 Route::middleware('auth')->group(function () {
+    // Dashboard (bisa pakai fitur verified jika diperlukan)
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->middleware(['verified'])->name('dashboard');
+
+    // Profile edit/update/delete
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// =============================
+// RUTE KERANJANG BELANJA
+// =============================
+
+Route::middleware('auth')->group(function () {
+    // Tampilkan isi keranjang
+    Route::get('/cart', [ShoppingCartController::class, 'index'])->name('cart.index');
+
+    // Tambah produk ke keranjang
+    Route::post('/cart/add', [ShoppingCartController::class, 'store'])->name('cart.store');
+
+    // Hapus produk dari keranjang
+    Route::delete('/cart/{id}', [ShoppingCartController::class, 'destroy'])->name('cart.destroy');
 });

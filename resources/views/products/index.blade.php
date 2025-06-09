@@ -126,6 +126,7 @@
     <header>
         <div class="logo">Tokopedia</div>
         <nav class="user-nav">
+        <a href="{{ route('cart.index') }}">🛒</a> {{-- <<== Tambahan Link ke Halaman Keranjang --}}
             @auth
                 <span>Selamat datang, {{ auth()->user()->name }}</span>
                 <form action="{{ route('logout') }}" method="POST">

@@ -53,11 +53,13 @@
                 <p>{{ $product->description }}</p>
             </div>
             
-            {{-- TOMBOL PERSIAPAN UNTUK FITUR KERANJANG --}}
-            <button class="action-button">+ Tambah ke Keranjang</button>
-
+            {{-- TOMBOL TAMBAH KE KERANJANG --}}
+            <form action="{{ route('cart.store') }}" method="POST">
+                 @csrf
+                 <input type="hidden" name="product_id" value="{{ $product->id }}">
+                 <button type="submit" class="action-button">+ Tambah ke Keranjang</button>
+                 </form>
         </div>
     </main>
-
 </body>
 </html>
