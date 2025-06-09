@@ -4,51 +4,44 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ShoppingCartController;
+use App\Http\Controllers\PaymentController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-*/
-
-// --- RUTE UTAMA & PRODUK ---
-
-// Homepage utama sekarang menampilkan daftar semua produk dari ProductController method 'index'
 Route::get('/', [ProductController::class, 'index'])->name('home');
 
-// Menggunakan Route::resource untuk membuat semua rute CRUD produk secara otomatis.
-// Ini akan membuat rute seperti:
-// - GET /products/{product}       (untuk method 'show')
-// - GET /products/create          (untuk method 'create')
-// - POST /products                (untuk method 'store')
-// - GET /products/{product}/edit  (untuk method 'edit')
-// - PUT/PATCH /products/{product} (untuk method 'update')
-// - DELETE /products/{product}    (untuk method 'destroy')
 Route::resource('products', ProductController::class);
 
+Route::get('/search', [ProductController::class, 'search'])->name('product.search');
 
-// --- RUTE AUTENTIKASI (LOGIN, LOGOUT) ---
-
-// Middleware 'guest' memastikan halaman ini hanya bisa diakses oleh pengguna yang BELUM LOGIN.
-Route::middleware('guest')->group(function() {
+Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
-    // Jika kamu butuh halaman registrasi, bisa ditambahkan di sini.
 });
 
-// Rute untuk logout hanya bisa diakses oleh user yang SUDAH LOGIN
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
-
-// --- RUTE BAWAAN LARAVEL (DASHBOARD & PROFILE) ---
-// Rute-rute ini bisa kamu simpan jika masih ingin menggunakannya.
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->middleware(['verified'])->name('dashboard');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/cart', [ShoppingCartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add', [ShoppingCartController::class, 'store'])->name('cart.store');
+    Route::delete('/cart/{id}', [ShoppingCartController::class, 'destroy'])->name('cart.destroy');
+
+    Route::patch('/cart/{id}/update-quantity', [ShoppingCartController::class, 'updateQuantity'])->name('cart.update_quantity');
+
+    Route::post('/checkout', [ShoppingCartController::class, 'checkout'])->name('cart.checkout');
+
+    Route::get('/order/success/{order}', function (\App\Models\Order $order) {
+        return view('order.success', compact('order'));
+    })->name('order.success');
+
+    Route::get('/order/failed/{order}', function (\App\Models\Order $order) {
+        return view('order.failed', compact('order'));
+    })->name('order.failed');
 });
