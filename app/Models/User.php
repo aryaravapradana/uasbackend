@@ -17,10 +17,7 @@ class User extends Model implements AuthenticatableContract
         'name',
         'email',
         'password',
-        // Tambahkan kolom lain sesuai kebutuhan, misal:
-        // 'username',
-        // 'phone_number',
-        // 'is_admin',
+
     ];
 
     protected $hidden = [

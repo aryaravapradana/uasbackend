@@ -17,6 +17,11 @@ Route::get('/search', [ProductController::class, 'search'])->name('product.searc
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
+
+    // === HANYA BAGIAN INI YANG DITAMBAHKAN ===
+    Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
+    Route::post('/register', [AuthController::class, 'register'])->name('register');
+    // =======================================
 });
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');

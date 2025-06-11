@@ -1,0 +1,59 @@
+:root {
+    --tokopedia-green: #4F9D4D;
+    --tokopedia-green-dark: #418240;
+    --background-color: #f8f9fa;
+    --card-color: #ffffff;
+    --text-dark: #31353B;
+    --text-muted: #6D7588;
+    --border-color: #E5E7EB;
+    --white: #FFFFFF;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: 'Nunito', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+.register-card {
+    width: 100%;
+    max-width: 480px; /* Sedikit lebih lebar untuk form registrasi */
+    background-color: var(--card-color);
+    border-radius: 16px;
+    padding: 40px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.card-header { text-align: center; margin-bottom: 30px; }
+.card-header .logo { max-width: 60px; margin: 0 auto 15px auto; }
+.card-header h1 { font-size: 2rem; font-weight: 800; }
+
+.form-group { text-align: left; margin-bottom: 20px; }
+label { display: block; margin-bottom: 8px; font-size: 0.9rem; font-weight: 600; color: var(--text-muted); }
+input { width: 100%; padding: 14px; background-color: #F9FAFB; border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-dark); font-family: 'Nunito', sans-serif; font-size: 1rem; transition: all 0.2s; }
+input:focus { outline: none; border-color: var(--tokopedia-green); box-shadow: 0 0 0 3px rgba(79, 157, 77, 0.2); }
+
+.form-navigation { margin-top: 30px; }
+.btn-submit {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--tokopedia-green);
+    border: none;
+    border-radius: 8px;
+    color: var(--white);
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.btn-submit:hover { background-color: var(--tokopedia-green-dark); }
+
+.form-footer { text-align: center; margin-top: 25px; font-size: 0.9rem; color: var(--text-muted); }
+.form-footer a { color: var(--tokopedia-green); font-weight: 700; text-decoration: none; }
+.form-footer a:hover { text-decoration: underline; }

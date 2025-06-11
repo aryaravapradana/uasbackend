@@ -1,46 +1,59 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
-         <!-- Nama -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" class="text-black" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/register.css') }}">
+</head>
+<body>
+    <div class="register-card">
+        <div class="card-header">
+            <img src="{{ asset('images/Tokopedia_Mascot.png') }}" alt="Tokopedia Logo" class="logo">
+            <h1>Buat Akun TokoClone</h1>
         </div>
-         <!-- Email -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" class="text-black" /> 
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-         <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" class="text-black" /> 
+        
+        <form action="{{ route('register') }}" method="POST" class="form-container">
+            @csrf
+            {{-- Input NAMA ditambahkan kembali di sini --}}
+            <div class="form-group">
+                <label for="name">Nama Lengkap</label>
+                <input type="text" id="name" name="name" value="{{ old('name') }}" required autofocus>
+            </div>
+            <div class="form-group">
+                <label for="email">Alamat Email</label>
+                <input type="email" id="email" name="email" value="{{ old('email') }}" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="password_confirmation">Konfirmasi Password</label>
+                <input type="password" id="password_confirmation" name="password_confirmation" required>
+            </div>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-         <!-- Konfirmasi Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" class="text-black" />
+            @if ($errors->any())
+                <div style="color: red; text-align: left; margin-bottom: 1rem; font-size: 0.9rem;">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
+            <div class="form-navigation">
+                 <button type="submit" class="btn btn-submit">Daftar</button>
+            </div>
+        </form>
 
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        <div class="form-footer">
+            <p>Sudah punya akun? <a href="{{ route('login') }}">Masuk di sini</a></p>
         </div>
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-blue-600 hover:text-blue-900" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-button class="ms-4 bg-blue-600 text-white hover:bg-blue-700">
-                {{ __('Register') }}
-            </x-button>
-        </div>
-    </form>
-</x-guest-layout>
+    </div>
+</body>
+</html>
