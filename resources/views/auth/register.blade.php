@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar</title>
+    <title>Daftar - Tokopedia Final Project</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -18,7 +18,6 @@
         
         <form action="{{ route('register') }}" method="POST" class="form-container">
             @csrf
-            {{-- Input NAMA ditambahkan kembali di sini --}}
             <div class="form-group">
                 <label for="name">Nama Lengkap</label>
                 <input type="text" id="name" name="name" value="{{ old('name') }}" required autofocus>
@@ -35,7 +34,6 @@
                 <label for="password_confirmation">Konfirmasi Password</label>
                 <input type="password" id="password_confirmation" name="password_confirmation" required>
             </div>
-
             @if ($errors->any())
                 <div style="color: red; text-align: left; margin-bottom: 1rem; font-size: 0.9rem;">
                     <ul>
@@ -45,12 +43,10 @@
                     </ul>
                 </div>
             @endif
-
             <div class="form-navigation">
                  <button type="submit" class="btn btn-submit">Daftar</button>
             </div>
         </form>
-
         <div class="form-footer">
             <p>Sudah punya akun? <a href="{{ route('login') }}">Masuk di sini</a></p>
         </div>
