@@ -2,80 +2,64 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash; 
-use App\Models\User;
-use Illuminate\Validation\Rules\Password; 
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
-
     public function showLoginForm()
     {
-       
         return view('auth.login');
     }
 
     public function login(Request $request)
     {
-        $rules = [
+        $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
-        ];
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
-            return redirect()->route('login')->withErrors($validator)->withInput($request->only('email'));
-        }
-        $credentials = $request->only('email', 'password');
+        ]);
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->intended('/');
         }
-        return redirect()->route('login')->withErrors([
+
+        return back()->withErrors([
             'email' => 'Email atau Password yang Anda masukkan salah.',
         ])->onlyInput('email');
     }
 
     public function logout(Request $request)
     {
-        Auth::logout(); 
+        Auth::logout();
         $request->session()->invalidate();
-        $request->session()->regenerateToken(); 
-        return redirect('/login'); 
+        $request->session()->regenerateToken();
+        return redirect('/login');
     }
-    public function showRegisterForm()
+    
+    public function showRegistrationForm()
     {
-        
         return view('auth.register');
     }
+
     public function register(Request $request)
     {
-        $rules = [ // aturan password
-            'name' => ['required', 'string', 'max:255'], 
-            'email' => ['required', 'email', 'unique:users,email'],
-            'password' => [
-                'required',
-                'confirmed', 
-                Password::min(8) 
-                          ->numbers(), 
-            ],
-        ];
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails()) {
-            return redirect()->route('register')
-                ->withErrors($validator)
-                ->withInput($request->only('name', 'email')); 
-        }
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password), 
+        $validatedData = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'confirmed', Password::min(8)->numbers()],
         ]);
-        Auth::login($user); 
-        return redirect()->intended('/');
+
+        $user = User::create([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+            'password' => Hash::make($validatedData['password']),
+        ]);
+
+        Auth::login($user);
+        return redirect()->route('home');
     }
 }
