@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar - Tokopedia Final Project</title>
+    <title>Login</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -129,9 +129,9 @@
             <div class="info-panel-content">
                 <div class="info-text">
                     <img src="{{ asset('images/Tokopedia_Mascot.png') }}" alt="Tokopedia Logo" class="logo">
-                    <h1>Mulai Petualanganmu!</h1>
+                    <h1>Selamat datang di TokoClone!</h1>
                     <div class="project-info">
-                        Daftarkan akunmu dan nikmati jutaan produk terbaik di TokoClone.
+                        Silahkan Login!
                     </div>
                 </div>
             </div>
@@ -164,7 +164,7 @@
                         </div>
                     @endif
 
-                    <button type="submit" class="login-button">Daftar</button>
+                    <button type="submit" class="login-button">Login</button>
                 </form>
                 <div class="form-footer">
                     <p>Belum punya akun? <a href="{{ route('register') }}">Daftar di sini</a></p>
