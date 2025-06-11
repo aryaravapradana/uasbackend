@@ -139,7 +139,7 @@
 
         <section class="form-panel">
             <div class="form-content">
-                <h1>Buat Akun Baru</h1>
+                <h1>Login</h1>
                 <form action="{{ route('register') }}" method="POST">
                     @csrf
                     <div class="form-group">
@@ -167,7 +167,7 @@
                     <button type="submit" class="login-button">Daftar</button>
                 </form>
                 <div class="form-footer">
-                    <p>Sudah punya akun? <a href="{{ route('register') }}">Masuk di sini</a></p>
+                    <p>Belum punya akun? <a href="{{ route('register') }}">Daftar di sini</a></p>
                 </div>
             </div>
         </section>
