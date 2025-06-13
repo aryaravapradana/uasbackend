@@ -8,6 +8,33 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
+        /* Tambahan styling untuk checkbox (jika diperlukan) */
+        .form-checkbox {
+            appearance: none;
+            display: inline-block;
+            width: 1.25rem; /* 20px */
+            height: 1.25rem; /* 20px */
+            border: 2px solid #6366f1; /* text-indigo-600 */
+            border-radius: 0.25rem; /* rounded */
+            vertical-align: middle;
+            position: relative;
+            cursor: pointer;
+        }
+        .form-checkbox:checked {
+            background-color: #6366f1; /* text-indigo-600 */
+            border-color: #6366f1;
+        }  
+        .form-checkbox:checked::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 0.35em; /* perkiraan ukuran centang */
+            height: 0.7em; /* perkiraan ukuran centang */
+            border: solid white;
+            border-width: 0 0.15em 0.15em 0;
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
     </style>
 </head>
 <body class="bg-gray-100 py-8">
@@ -39,7 +66,7 @@
                         <div class="flex-shrink-0 mr-4">
                             <input type="checkbox" class="item-checkbox form-checkbox h-5 w-5 text-indigo-600 rounded"
                                    data-item-id="{{ $item->id }}"
-                                   data-item-price="{{ $item->product->price ?? 0 }}"
+                                   data-item-price="{{ $item->product->price ?? 0 }}" {{-- Harga per unit produk --}}
                                    data-initial-quantity="{{ $item->quantity }}"
                                    value="{{ $item->id }}"
                                    checked> {{-- Default: semua item dicentang saat pertama kali load --}}
@@ -72,7 +99,7 @@
             <div class="text-right mt-6 pt-4 border-t-2 border-gray-200">
                 <p class="text-lg font-semibold text-gray-700">Total Belanja:</p>
                 <div class="text-3xl font-extrabold text-indigo-600" id="overall-total-amount">
-                    Rp {{ number_format($totalAmount, 0, ',', '.') }}
+                    Rp {{ number_format($totalAmount, 0, ',', '.') }} 
                 </div>
             </div>
 
@@ -126,18 +153,16 @@
                 let total = 0;
                 let selectedIds = [];
                 itemCheckboxes.forEach(checkbox => {
-                    // Ambil harga per item yang diperbarui (misalnya dari data-item-price)
-                    // dan kuantitas dari span/input yang sesuai
                     const itemId = checkbox.dataset.itemId;
                     const quantity = parseInt(document.getElementById(`quantity-${itemId}`).textContent);
-                    const pricePerUnit = parseFloat(checkbox.dataset.itemPrice); // Harga per unit produk
+                    const pricePerUnit = parseFloat(checkbox.dataset.itemPrice);
 
                     if (checkbox.checked) {
                         total += pricePerUnit * quantity;
                         selectedIds.push(itemId);
                     }
                 });
-                overallTotalAmountSpan.textContent = 'Rp ' + total.toLocaleString('id-ID');
+                overallTotalAmountSpan.textContent = 'Rp ' + number_format(total, 0, ',', '.'); // Gunakan number_format
                 selectedItemsIdInput.value = selectedIds.join(',');
             }
 
@@ -185,7 +210,7 @@
                     .then(data => {
                         if (data.success) {
                             quantitySpan.textContent = data.newQuantity; // Update quantity di tampilan
-                            document.getElementById(`item-total-${itemId}`).textContent = `Rp ${number_format(data.newPrice, 0, ',', '.')}`; // Update total per item
+                            document.getElementById(`item-total-${itemId}`).textContent = `Rp ${data.newItemTotal}`; // Update total per item
                             
                             // Update data-item-price di checkbox agar perhitungan grand total akurat
                             const checkbox = document.querySelector(`.item-checkbox[data-item-id="${itemId}"]`);
@@ -196,6 +221,7 @@
                             calculateGrandTotal(); // Hitung ulang total belanja keseluruhan
                         } else {
                             console.error('Error:', data.message || 'Gagal memperbarui kuantitas.');
+                            alert('Gagal memperbarui kuantitas: ' + (data.message || 'Silakan coba lagi.'));
                         }
                     })
                     .catch(error => {
