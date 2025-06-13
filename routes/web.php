@@ -57,4 +57,6 @@ Route::middleware('auth')->group(function () {
    
     Route::get('/kategori/{slug}', [SubCategoryController::class, 'show']);
 
+    Route::get('/order-history', [OrderController::class, 'history'])->name('order.history');
+
 });
