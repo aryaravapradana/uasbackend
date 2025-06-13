@@ -18,11 +18,9 @@ class ShoppingCartController extends Controller
         $cartItems = ShoppingCart::where('user_id', Auth::id())->with('product')->get();
 
         $totalAmount = $cartItems->sum(function ($item) {
-            // Ini akan menjadi total awal semua item di keranjang
             return $item->quantity * ($item->product->price ?? 0);
         });
 
-        // Mengirimkan totalAmount awal sebagai $totalBelanjaAwal ke view
         return view('cart.index', compact('cartItems', 'totalAmount'));
     }
 
@@ -84,24 +82,21 @@ class ShoppingCartController extends Controller
         $cartItem->quantity = $request->quantity;
         $cartItem->save();
 
-        // Mengembalikan harga per unit produk
         $pricePerUnit = $cartItem->product->price ?? 0;
-        // Mengembalikan total harga item setelah update kuantitas
         $newItemTotal = $pricePerUnit * $cartItem->quantity;
 
-        // Hitung ulang total belanja keseluruhan setelah update ini (opsional, bisa juga di frontend)
-        $overallTotalAmount = ShoppingCart::where('user_id', Auth::id())->with('product')->get()->sum(function($item) {
+        $allCartItems = ShoppingCart::where('user_id', Auth::id())->with('product')->get();
+        $overallTotalAmount = $allCartItems->sum(function($item) {
             return $item->quantity * ($item->product->price ?? 0);
         });
-
 
         return response()->json([
             'success' => true,
             'message' => 'Kuantitas berhasil diperbarui.',
             'newQuantity' => $cartItem->quantity,
-            'pricePerUnit' => $pricePerUnit, // Kirim harga per unit produk
-            'newItemTotal' => number_format($newItemTotal, 0, ',', '.'), // Kirim total per item
-            'overallTotalAmount' => number_format($overallTotalAmount, 0, ',', '.') // Kirim total keseluruhan
+            'pricePerUnit' => $pricePerUnit, // Mengembalikan harga per unit produk
+            'newItemTotal' => number_format($newItemTotal, 0, ',', '.'), // Total harga item ini yang baru
+            'overallTotalAmount' => number_format($overallTotalAmount, 0, ',', '.') // Total keseluruhan keranjang
         ]);
     }
 
@@ -109,7 +104,7 @@ class ShoppingCartController extends Controller
     {
         $request->validate([
             'address' => 'required|string|max:255',
-            'phone' => 'required|string|max:20',
+            'phone' => 'required|string|max:20', // Input 'phone' dari form
             'selected_items_id' => 'required|string', // String CSV dari ID item keranjang
             'notes' => 'nullable|string|max:500',
         ]);
@@ -127,7 +122,7 @@ class ShoppingCartController extends Controller
             // Ambil item keranjang yang dipilih oleh pengguna
             $cartItems = ShoppingCart::whereIn('id', $selectedCartItemIds)
                                      ->where('user_id', $user->id)
-                                     ->with('product') // Eager load produk terkait
+                                     ->with('product')
                                      ->get();
 
             if ($cartItems->isEmpty()) {
@@ -144,7 +139,7 @@ class ShoppingCartController extends Controller
                     $subtotal = $item->quantity * $itemPrice;
                     $totalAmount += $subtotal;
 
-                    $orderItemsData[] = new OrderItem([ // Pastikan OrderItem diimpor (use App\Models\OrderItem;)
+                    $orderItemsData[] = new OrderItem([
                         'product_id' => $item->product_id,
                         'quantity' => $item->quantity,
                         'price' => $itemPrice,
@@ -155,33 +150,38 @@ class ShoppingCartController extends Controller
                 }
             }
 
-            $order = Order::create([ // Pastikan Order diimpor (use App\Models\Order;)
+            // Buat Order baru
+            $order = Order::create([
                 'user_id' => $user->id,
                 'total_amount' => $totalAmount,
-                'status' => 'unpaid', // Status awal pesanan
-                'shipping_address' => $request->address,
-                'phone_number' => $request->phone, // Sesuaikan dengan nama kolom di Order
+                'status' => 'unpaid',
+                'address' => $request->address,
+                'shipping_address' => $request->address, // Mengisi kolom 'shipping_address'
+                'phone' => $request->phone, // Mengisi kolom 'phone' dari request
                 'notes' => $request->notes,
                 'order_date' => now(),
+                // Pastikan kolom-kolom ini ada di tabel 'orders' dan fillable di model Order
+                'billing_address' => $request->address, // Asumsi billing_address juga sama dengan alamat
+                'payment_method' => 'default', // Atur default jika tidak ada input dari form
+                'payment_status' => 'pending', // Atur default jika tidak ada input dari form
             ]);
 
-            $order->items()->saveMany($orderItemsData); // Pastikan ada relasi items() di model Order
+            $order->items()->saveMany($orderItemsData);
 
             // Hapus item dari keranjang yang sudah di-checkout
             ShoppingCart::whereIn('id', $selectedCartItemIds)
                         ->where('user_id', $user->id)
                         ->delete();
 
-            // Memanggil PaymentController untuk inisiasi pembayaran
-            $paymentRequest = Request::create('/api/payments/initiate', 'POST', [
-                'order_id' => $order->id,
-                'amount' => $totalAmount,
-                'user_id' => $user->id, // Kirim user_id ke PaymentController jika diperlukan
-            ]);
-
-            // Gunakan resolve(PaymentController::class) untuk mendapatkan instance controller melalui container
+            // Memanggil PaymentController (asumsi ada dan berfungsi)
             $paymentController = app(\App\Http\Controllers\PaymentController::class);
-            $paymentResponse = $paymentController->initiatePayment($paymentRequest);
+            $paymentResponse = $paymentController->initiatePayment(
+                Request::create('/api/payments/initiate', 'POST', [
+                    'order_id' => $order->id,
+                    'amount' => $totalAmount,
+                    'user_id' => $user->id,
+                ])
+            );
 
             $paymentData = $paymentResponse->getData();
 
@@ -192,7 +192,7 @@ class ShoppingCartController extends Controller
                 DB::commit();
                 return redirect()->route('order.failed', $order->id)->with('error', 'Checkout berhasil, namun pembayaran gagal. Silakan coba lagi.');
             } else {
-                DB::rollBack(); // Rollback jika inisiasi pembayaran tidak berhasil atau status tidak 'paid'/'failed'
+                DB::rollBack();
                 Log::error('Payment initiation failed after order creation.', [
                     'order_id' => $order->id,
                     'payment_response' => $paymentData,
