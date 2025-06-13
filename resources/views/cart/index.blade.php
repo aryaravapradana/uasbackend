@@ -32,30 +32,42 @@
                 <a href="{{ route('home') }}" class="inline-block bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors duration-300">Kembali ke Beranda</a>
             </div>
         @else
-            @foreach ($cartItems as $item)
-                <div class="flex flex-col sm:flex-row items-start sm:items-center py-4 border-b border-gray-200 last:border-b-0">
-                    <img src="{{ $item->product->image_url ?? 'https://placehold.co/80x80/cccccc/333333?text=Produk' }}" alt="gambar produk" class="w-20 h-20 object-cover rounded-lg mr-4 mb-4 sm:mb-0">
-                    <div class="flex-1">
-                        <h4 class="text-lg font-semibold text-gray-800">{{ $item->product->name ?? 'Produk Tidak Ditemukan' }}</h4>
-                        <p class="text-sm text-gray-600 mt-1 line-clamp-2">{{ $item->product->description ?? 'Deskripsi tidak tersedia.' }}</p>
-                    </div>
-                    <div class="flex flex-col items-end sm:items-end mt-4 sm:mt-0 min-w-[150px]">
-                        <div class="text-lg font-bold text-indigo-600" id="item-total-{{ $item->id }}">
-                            Rp {{ number_format($item->quantity * ($item->product->price ?? 0), 0, ',', '.') }}
+            <div class="cart-items-list">
+                @foreach ($cartItems as $item)
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center py-4 border-b border-gray-200 last:border-b-0">
+                        {{-- Checkbox untuk memilih item --}}
+                        <div class="flex-shrink-0 mr-4">
+                            <input type="checkbox" class="item-checkbox form-checkbox h-5 w-5 text-indigo-600 rounded"
+                                   data-item-id="{{ $item->id }}"
+                                   data-item-price="{{ $item->product->price ?? 0 }}"
+                                   data-initial-quantity="{{ $item->quantity }}"
+                                   value="{{ $item->id }}"
+                                   checked> {{-- Default: semua item dicentang saat pertama kali load --}}
                         </div>
-                        <div class="flex items-center space-x-2 mt-2">
-                            <button class="px-3 py-1 border border-gray-300 rounded-md hover:bg-gray-100 update-qty-btn" data-id="{{ $item->id }}" data-action="decrease">-</button>
-                            <span id="quantity-{{ $item->id }}" class="w-8 text-center">{{ $item->quantity }}</span>
-                            <button class="px-3 py-1 border border-gray-300 rounded-md hover:bg-gray-100 update-qty-btn" data-id="{{ $item->id }}" data-action="increase">+</button>
+
+                        <img src="{{ $item->product->image_url ?? 'https://placehold.co/80x80/cccccc/333333?text=Produk' }}" alt="gambar produk" class="w-20 h-20 object-cover rounded-lg mr-4 mb-4 sm:mb-0">
+                        <div class="flex-1">
+                            <h4 class="text-lg font-semibold text-gray-800">{{ $item->product->name ?? 'Produk Tidak Ditemukan' }}</h4>
+                            <p class="text-sm text-gray-600 mt-1 line-clamp-2">{{ $item->product->description ?? 'Deskripsi tidak tersedia.' }}</p>
+                            <div class="text-lg font-bold text-indigo-600 mt-2" id="item-total-{{ $item->id }}">
+                                Rp {{ number_format($item->quantity * ($item->product->price ?? 0), 0, ',', '.') }}
+                            </div>
                         </div>
-                        <form action="{{ route('cart.destroy', $item->id) }}" method="POST" class="mt-2">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="text-red-500 text-sm hover:underline">Hapus</button>
-                        </form>
+                        <div class="flex flex-col items-end sm:items-end mt-4 sm:mt-0 min-w-[150px]">
+                            <div class="flex items-center space-x-2">
+                                <button class="px-3 py-1 border border-gray-300 rounded-md hover:bg-gray-100 update-qty-btn" data-id="{{ $item->id }}" data-action="decrease">-</button>
+                                <span id="quantity-{{ $item->id }}" class="w-8 text-center">{{ $item->quantity }}</span>
+                                <button class="px-3 py-1 border border-gray-300 rounded-md hover:bg-gray-100 update-qty-btn" data-id="{{ $item->id }}" data-action="increase">+</button>
+                            </div>
+                            <form action="{{ route('cart.destroy', $item->id) }}" method="POST" class="mt-2">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-red-500 text-sm hover:underline">Hapus</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            </div>
 
             <div class="text-right mt-6 pt-4 border-t-2 border-gray-200">
                 <p class="text-lg font-semibold text-gray-700">Total Belanja:</p>
@@ -64,10 +76,14 @@
                 </div>
             </div>
 
+            {{-- Formulir Informasi Pengiriman dan Tombol Checkout --}}
             <div class="mt-8 pt-6 border-t border-gray-200">
                 <h3 class="text-2xl font-bold text-gray-800 mb-4">Informasi Pengiriman</h3>
-                <form action="{{ route('cart.checkout') }}" method="POST" class="space-y-4">
+                <form id="checkout-form" action="{{ route('cart.checkout') }}" method="POST" class="space-y-4">
                     @csrf
+                    {{-- Input tersembunyi untuk menyimpan ID item yang dipilih --}}
+                    <input type="hidden" name="selected_items_id" id="selected-items-id">
+
                     <div>
                         <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Alamat Lengkap</label>
                         <textarea id="address" name="address" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">{{ old('address', Auth::user()->address ?? '') }}</textarea>
@@ -100,7 +116,40 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+            const itemCheckboxes = document.querySelectorAll('.item-checkbox');
+            const overallTotalAmountSpan = document.getElementById('overall-total-amount');
+            const selectedItemsIdInput = document.getElementById('selected-items-id');
+            const checkoutForm = document.getElementById('checkout-form');
 
+            // Fungsi untuk menghitung ulang total belanja
+            function calculateGrandTotal() {
+                let total = 0;
+                let selectedIds = [];
+                itemCheckboxes.forEach(checkbox => {
+                    // Ambil harga per item yang diperbarui (misalnya dari data-item-price)
+                    // dan kuantitas dari span/input yang sesuai
+                    const itemId = checkbox.dataset.itemId;
+                    const quantity = parseInt(document.getElementById(`quantity-${itemId}`).textContent);
+                    const pricePerUnit = parseFloat(checkbox.dataset.itemPrice); // Harga per unit produk
+
+                    if (checkbox.checked) {
+                        total += pricePerUnit * quantity;
+                        selectedIds.push(itemId);
+                    }
+                });
+                overallTotalAmountSpan.textContent = 'Rp ' + total.toLocaleString('id-ID');
+                selectedItemsIdInput.value = selectedIds.join(',');
+            }
+
+            // Inisialisasi total saat halaman dimuat
+            calculateGrandTotal();
+
+            // Event listener untuk checkbox
+            itemCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', calculateGrandTotal);
+            });
+
+            // Event listener untuk tombol +/- kuantitas
             document.querySelectorAll('.update-qty-btn').forEach(button => {
                 button.addEventListener('click', function() {
                     const itemId = this.dataset.id;
@@ -129,28 +178,65 @@
                     })
                     .then(response => {
                         if (!response.ok) {
-                            // Tangani jika respons bukan 2xx (misalnya 419, 500)
                             return response.text().then(text => { throw new Error(text || response.statusText) });
                         }
                         return response.json();
                     })
                     .then(data => {
-                        if (data.message) {
-                            console.log(data.message);
-                            quantitySpan.textContent = data.new_quantity;
-                            document.getElementById(`item-total-${itemId}`).textContent = `Rp ${data.new_item_total}`;
-                            document.getElementById('overall-total-amount').textContent = `Rp ${data.overall_total_amount}`;
-                        } else if (data.error) {
-                            console.error('Error:', data.error);
+                        if (data.success) {
+                            quantitySpan.textContent = data.newQuantity; // Update quantity di tampilan
+                            document.getElementById(`item-total-${itemId}`).textContent = `Rp ${number_format(data.newPrice, 0, ',', '.')}`; // Update total per item
+                            
+                            // Update data-item-price di checkbox agar perhitungan grand total akurat
+                            const checkbox = document.querySelector(`.item-checkbox[data-item-id="${itemId}"]`);
+                            if (checkbox) {
+                                checkbox.dataset.itemPrice = data.pricePerUnit; // Ini harus harga per unit produk
+                            }
+                            
+                            calculateGrandTotal(); // Hitung ulang total belanja keseluruhan
+                        } else {
+                            console.error('Error:', data.message || 'Gagal memperbarui kuantitas.');
                         }
                     })
                     .catch(error => {
                         console.error('Error updating quantity:', error);
-                        // Anda bisa menampilkan pesan error yang lebih user-friendly di sini
-                        // Misalnya: alert('Gagal memperbarui kuantitas. Silakan coba lagi.');
+                        alert('Gagal memperbarui kuantitas. Silakan coba lagi.');
                     });
                 });
             });
+
+            // Pencegahan submit jika tidak ada item yang dipilih
+            checkoutForm.addEventListener('submit', function(event) {
+                const selectedIds = selectedItemsIdInput.value;
+                if (!selectedIds) {
+                    alert('Pilih setidaknya satu item untuk melanjutkan pembayaran.');
+                    event.preventDefault(); // Batalkan submit form
+                }
+            });
+
+            // Helper function untuk format angka (dari PHP ke JS)
+            function number_format(number, decimals, decPoint, thousandsSep) {
+                number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+                var n = !isFinite(+number) ? 0 : +number,
+                    prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+                    sep = (typeof thousandsSep === 'undefined') ? '.' : thousandsSep,
+                    dec = (typeof decPoint === 'undefined') ? ',' : decPoint,
+                    s = '',
+                    toFixedFix = function(n, prec) {
+                        var k = Math.pow(10, prec);
+                        return '' + Math.round(n * k) / k;
+                    };
+
+                s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+                if (s[0].length > 3) {
+                    s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+                }
+                if ((s[1] || '').length < prec) {
+                    s[1] = s[1] || '';
+                    s[1] += new Array(prec - s[1].length + 1).join('0');
+                }
+                return s.join(dec);
+            }
         });
     </script>
 </body>
