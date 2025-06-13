@@ -56,5 +56,23 @@ class User extends Model implements AuthenticatableContract
     {
         return $this->hasOne(ShoppingCart::class);
     }
+
+        /**
+     * Mengambil inisial dari nama user.
+     * Contoh: "Anjay Mabar" → "AM"
+     */
+    public function getInitialAttribute(): string
+{
+    $nama = explode(' ', $this->name);
+    $inisial = '';
+
+    foreach ($nama as $n) {
+        $inisial .= strtoupper(substr($n, 0, 1));
+    }
+
+    return substr($inisial, 0, 2); // Ambil max 2 huruf aja
+}
+
+
 }
 #

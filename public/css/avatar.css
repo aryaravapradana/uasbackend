@@ -1,0 +1,32 @@
+.user-profile-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #1F2937;
+}
+
+.user-avatar-img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-avatar-default {
+    width: 32px;
+    height: 32px;
+    background-color: #f3f4f6;
+    color: #374151;
+    font-weight: bold;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-family: 'Nunito', sans-serif;
+}

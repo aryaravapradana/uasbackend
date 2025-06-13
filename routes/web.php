@@ -6,7 +6,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShoppingCartController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\OrderController; 
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\SubCategoryController;
 
 Route::get('/', [ProductController::class, 'index'])->name('home');
 
@@ -52,4 +53,8 @@ Route::middleware('auth')->group(function () {
     })->name('order.failed');
 
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+
+   
+    Route::get('/kategori/{slug}', [SubCategoryController::class, 'show']);
+
 });

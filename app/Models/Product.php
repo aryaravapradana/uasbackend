@@ -64,4 +64,10 @@ class Product extends Model
                     ->withPivot('quantity', 'price') // Contoh jika ada detail di pivot
                     ->withTimestamps();
     }
+
+    public function subcategory()
+    {
+        return $this->belongsTo(\App\Models\SubCategories::class, 'subcategory_id');
+    }
+
 }
