@@ -65,9 +65,15 @@ class Product extends Model
                     ->withTimestamps();
     }
 
+    public function category()
+    {
+        return $this->belongsTo(Categories::class, 'category_id');
+    }
+
     public function subcategory()
     {
-        return $this->belongsTo(\App\Models\SubCategories::class, 'subcategory_id');
+        return $this->belongsTo(SubCategories::class, 'subcategory_id');
     }
+
 
 }

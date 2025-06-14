@@ -4,14 +4,10 @@ namespace Database\Seeders;
 
 use App\Models\Categories;
 use App\Models\SubCategories;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CategoriesSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         // KATEGORI UTAMA
@@ -52,26 +48,69 @@ class CategoriesSeeder extends Seeder
         ]);
 
         // SUBKATEGORI ELEKTRONIK
-        SubCategories::firstOrCreate([
-            'slug' => 'hp'
-        ], [
-            'name' => 'HP',
-            'category_id' => $elektronik->id
-        ]);
-
-        SubCategories::firstOrCreate([
-            'slug' => 'laptop'
-        ], [
-            'name' => 'Laptop',
-            'category_id' => $elektronik->id
-        ]);
+        $elektronikSubs = ['HP', 'Laptop', 'Tablet', 'TV', 'Monitor', 'Kamera', 'Headphone', 'Smartwatch', 'Speaker', 'Printer'];
+        foreach ($elektronikSubs as $sub) {
+            SubCategories::firstOrCreate([
+                'slug' => strtolower($sub)
+            ], [
+                'name' => $sub,
+                'category_id' => $elektronik->id
+            ]);
+        }
 
         // SUBKATEGORI KECANTIKAN
-        SubCategories::firstOrCreate([
-            'slug' => 'skincare'
-        ], [
-            'name' => 'Skincare',
-            'category_id' => $kecantikan->id
-        ]);
+        $kecantikanSubs = ['Skincare', 'Makeup', 'Parfum', 'Sabun', 'Shampoo', 'Body Lotion', 'Lipstick', 'Masker Wajah', 'Eyebrow', 'Foundation'];
+        foreach ($kecantikanSubs as $sub) {
+            SubCategories::firstOrCreate([
+                'slug' => strtolower(str_replace(' ', '-', $sub))
+            ], [
+                'name' => $sub,
+                'category_id' => $kecantikan->id
+            ]);
+        }
+
+        // SUBKATEGORI FASHION
+        $fashionSubs = ['Baju', 'Celana', 'Sepatu', 'Jaket', 'Topi', 'Sandal', 'Kemeja', 'Dress', 'Kaos', 'Aksesoris'];
+        foreach ($fashionSubs as $sub) {
+            SubCategories::firstOrCreate([
+                'slug' => strtolower($sub)
+            ], [
+                'name' => $sub,
+                'category_id' => $fashion->id
+            ]);
+        }
+
+        // SUBKATEGORI RUMAH TANGGA
+        $rumahSubs = ['Kompor', 'Kulkas', 'Mesin Cuci', 'Dispenser', 'Meja', 'Kursi', 'Lemari', 'Lampu', 'Kipas', 'Kasur'];
+        foreach ($rumahSubs as $sub) {
+            SubCategories::firstOrCreate([
+                'slug' => strtolower(str_replace(' ', '-', $sub))
+            ], [
+                'name' => $sub,
+                'category_id' => $rumahTangga->id
+            ]);
+        }
+
+        // SUBKATEGORI OLAHRAGA
+        $olahragaSubs = ['Bola', 'Raket', 'Sepatu Olahraga', 'Matras', 'Dumbbell', 'Jersey', 'Sepeda', 'Kacamata Renang', 'Pelindung Lutut', 'Skateboard'];
+        foreach ($olahragaSubs as $sub) {
+            SubCategories::firstOrCreate([
+                'slug' => strtolower(str_replace(' ', '-', $sub))
+            ], [
+                'name' => $sub,
+                'category_id' => $olahraga->id
+            ]);
+        }
+
+        // SUBKATEGORI HOBI
+        $hobiSubs = ['Game', 'Puzzle', 'Model Kit', 'Buku', 'Alat Musik', 'Drone', 'Kamera Analog', 'Kartu Koleksi', 'Kerajinan', 'Lego'];
+        foreach ($hobiSubs as $sub) {
+            SubCategories::firstOrCreate([
+                'slug' => strtolower(str_replace(' ', '-', $sub))
+            ], [
+                'name' => $sub,
+                'category_id' => $hobi->id
+            ]);
+        }
     }
 }

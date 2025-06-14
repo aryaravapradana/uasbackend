@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Categories;
 use App\Models\Shop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; // <-- Import class Auth
@@ -13,14 +14,14 @@ class ProductController extends Controller
      * Menampilkan halaman daftar semua produk (untuk user biasa atau admin).
      * Ini menggantikan getProducts() dan productsUser().
      */
-    public function index()
+   public function index()
     {
-        // Mengambil produk terbaru, 12 per halaman
         $products = Product::latest()->paginate(12);
-        
-        // Menggunakan satu view yang sama: 'products.index'
-        return view('products.index', ['products' => $products]);
+        $categories = Categories::with('subcategories')->get();
+
+        return view('products.index', compact('products', 'categories'));
     }
+
 
     /**
      * Menampilkan halaman form untuk membuat produk baru.
@@ -132,7 +133,6 @@ class ProductController extends Controller
                                    ->orWhere('description', 'like', '%' . $query . '%')
                                    ->get();
 
-        // Tambahkan baris-baris ini:
         if ($products->isEmpty()) {
             abort(404);
         }
