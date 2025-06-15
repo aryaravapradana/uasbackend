@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Categories;
-use App\Models\SubCategories;
+use App\Models\Category;
+use App\Models\SubCategory;
 use Illuminate\Database\Seeder;
 
 class CategoriesSeeder extends Seeder
@@ -11,37 +11,37 @@ class CategoriesSeeder extends Seeder
     public function run(): void
     {
         // KATEGORI UTAMA
-        $elektronik = Categories::firstOrCreate([
+        $elektronik = Category::firstOrCreate([
             'slug' => 'elektronik'
         ], [
             'name' => 'Elektronik'
         ]);
 
-        $kecantikan = Categories::firstOrCreate([
+        $kecantikan = Category::firstOrCreate([
             'slug' => 'kecantikan'
         ], [
             'name' => 'Kecantikan'
         ]);
 
-        $fashion = Categories::firstOrCreate([
+        $fashion = Category::firstOrCreate([
             'slug' => 'fashion'
         ], [
             'name' => 'Fashion'
         ]);
 
-        $rumahTangga = Categories::firstOrCreate([
+        $rumahTangga = Category::firstOrCreate([
             'slug' => 'rumah-tangga'
         ], [
             'name' => 'Rumah Tangga'
         ]);
 
-        $olahraga = Categories::firstOrCreate([
+        $olahraga = Category::firstOrCreate([
             'slug' => 'olahraga'
         ], [
             'name' => 'Olahraga'
         ]);
 
-        $hobi = Categories::firstOrCreate([
+        $hobi = Category::firstOrCreate([
             'slug' => 'hobi'
         ], [
             'name' => 'Hobi'
@@ -50,7 +50,7 @@ class CategoriesSeeder extends Seeder
         // SUBKATEGORI ELEKTRONIK
         $elektronikSubs = ['HP', 'Laptop', 'Tablet', 'TV', 'Monitor', 'Kamera', 'Headphone', 'Smartwatch', 'Speaker', 'Printer'];
         foreach ($elektronikSubs as $sub) {
-            SubCategories::firstOrCreate([
+            SubCategory::firstOrCreate([
                 'slug' => strtolower($sub)
             ], [
                 'name' => $sub,
@@ -61,7 +61,7 @@ class CategoriesSeeder extends Seeder
         // SUBKATEGORI KECANTIKAN
         $kecantikanSubs = ['Skincare', 'Makeup', 'Parfum', 'Sabun', 'Shampoo', 'Body Lotion', 'Lipstick', 'Masker Wajah', 'Eyebrow', 'Foundation'];
         foreach ($kecantikanSubs as $sub) {
-            SubCategories::firstOrCreate([
+            SubCategory::firstOrCreate([
                 'slug' => strtolower(str_replace(' ', '-', $sub))
             ], [
                 'name' => $sub,
@@ -72,7 +72,7 @@ class CategoriesSeeder extends Seeder
         // SUBKATEGORI FASHION
         $fashionSubs = ['Baju', 'Celana', 'Sepatu', 'Jaket', 'Topi', 'Sandal', 'Kemeja', 'Dress', 'Kaos', 'Aksesoris'];
         foreach ($fashionSubs as $sub) {
-            SubCategories::firstOrCreate([
+            SubCategory::firstOrCreate([
                 'slug' => strtolower($sub)
             ], [
                 'name' => $sub,
@@ -83,7 +83,7 @@ class CategoriesSeeder extends Seeder
         // SUBKATEGORI RUMAH TANGGA
         $rumahSubs = ['Kompor', 'Kulkas', 'Mesin Cuci', 'Dispenser', 'Meja', 'Kursi', 'Lemari', 'Lampu', 'Kipas', 'Kasur'];
         foreach ($rumahSubs as $sub) {
-            SubCategories::firstOrCreate([
+            SubCategory::firstOrCreate([
                 'slug' => strtolower(str_replace(' ', '-', $sub))
             ], [
                 'name' => $sub,
@@ -94,7 +94,7 @@ class CategoriesSeeder extends Seeder
         // SUBKATEGORI OLAHRAGA
         $olahragaSubs = ['Bola', 'Raket', 'Sepatu Olahraga', 'Matras', 'Dumbbell', 'Jersey', 'Sepeda', 'Kacamata Renang', 'Pelindung Lutut', 'Skateboard'];
         foreach ($olahragaSubs as $sub) {
-            SubCategories::firstOrCreate([
+            SubCategory::firstOrCreate([
                 'slug' => strtolower(str_replace(' ', '-', $sub))
             ], [
                 'name' => $sub,
@@ -105,7 +105,7 @@ class CategoriesSeeder extends Seeder
         // SUBKATEGORI HOBI
         $hobiSubs = ['Game', 'Puzzle', 'Model Kit', 'Buku', 'Alat Musik', 'Drone', 'Kamera Analog', 'Kartu Koleksi', 'Kerajinan', 'Lego'];
         foreach ($hobiSubs as $sub) {
-            SubCategories::firstOrCreate([
+            SubCategory::firstOrCreate([
                 'slug' => strtolower(str_replace(' ', '-', $sub))
             ], [
                 'name' => $sub,

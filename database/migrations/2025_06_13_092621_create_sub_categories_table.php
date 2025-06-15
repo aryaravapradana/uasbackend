@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('sub_categories', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('slug')->unique();
+            $table->unsignedBigInteger('category_id');
             $table->timestamps();
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 
@@ -23,5 +28,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('sub_categories');
+        Schema::disableForeignKeyConstraints();
+        Schema::enableForeignKeyConstraints();
     }
 };

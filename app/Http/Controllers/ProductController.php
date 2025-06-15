@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\Categories;
+use App\Models\Category;
 use App\Models\Shop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; // <-- Import class Auth
@@ -17,7 +17,7 @@ class ProductController extends Controller
    public function index()
     {
         $products = Product::latest()->paginate(4);
-        $categories = Categories::with('subcategories')->get();
+        $categories = Category::with('subcategories')->get();
 
         return view('products.index', compact('products', 'categories'));
     }
@@ -70,12 +70,14 @@ class ProductController extends Controller
      */
     public function show(Product $product) // <-- Menggunakan Route Model Binding
     {
-        // $product sudah otomatis diambil oleh Laravel. Tidak perlu Product::find().
-        
-        // Contoh cara mengambil data relasi di masa depan:
-        // $reviews = $product->reviews()->latest()->get();
-
-        return view('products.show', ['product' => $product]);
+            if (!session()->has('prev_category_url')) {
+            $referer = url()->previous();
+            if (str_contains($referer, '/kategori/')) {
+                session(['prev_category_url' => $referer]);
+            }
+        }
+    
+        return view('products.show', compact('product'));
     }
 
     /**

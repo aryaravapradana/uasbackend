@@ -12,14 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('categories', function (Blueprint $table) {
-            $table->id(); // otomatis bigIncrements (unsigned big int)
+        $table->id();
         $table->string('name');
         $table->string('slug')->unique();
         $table->unsignedBigInteger('parent_id')->nullable(); // FIX: manual define
         $table->timestamps();
 
         // Tambah foreign key constraint setelah define parent_id
-        $table->foreign('parent_id')->references('id')->on('categories')->onDelete('cascade');
+        $table->foreign('parent_id')
+            ->references('id')  
+            ->on('categories')  
+            ->onDelete('cascade');
     });
 }
 

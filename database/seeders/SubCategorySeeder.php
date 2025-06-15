@@ -3,52 +3,41 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Categories;
-use App\Models\SubCategories;
+use App\Models\Category;
+use App\Models\SubCategory;
 
 class SubCategorySeeder extends Seeder
 {
     public function run(): void
     {
-        // Cari atau buat kategori 'Elektronik'
-        $elektronik = Categories::firstOrCreate(
-            ['name' => 'Elektronik'],
-            ['slug' => 'elektronik']
+        $elektronik = Category::firstOrCreate(
+            ['slug' => 'elektronik'],
+            ['name' => 'Elektronik']
         );
 
-        // Cek apakah sudah ada subkategori-nya
-        $existing = SubCategories::where('category_id', $elektronik->id)
-            ->whereIn('slug', ['hp', 'laptop'])
-            ->pluck('slug')
-            ->toArray();
+        $subcategories = [
+            ['name' => 'HP', 'slug' => 'hp'],
+            ['name' => 'Laptop', 'slug' => 'laptop'],
+            ['name' => 'Printer', 'slug' => 'printer'],
+            ['name' => 'TV', 'slug' => 'tv'],
+            ['name' => 'Kulkas', 'slug' => 'kulkas'],
+            ['name' => 'AC', 'slug' => 'ac'],
+            ['name' => 'Mesin Cuci', 'slug' => 'mesin-cuci'],
+            ['name' => 'Kamera', 'slug' => 'kamera'],
+            ['name' => 'Speaker', 'slug' => 'speaker'],
+            ['name' => 'Smartwatch', 'slug' => 'smartwatch'],
+        ];
 
-        $data = [];
-
-        if (!in_array('hp', $existing)) {
-            $data[] = [
-                'category_id' => $elektronik->id,
-                'name' => 'HP',
-                'slug' => 'hp',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
+        foreach ($subcategories as $data) {
+            SubCategory::firstOrCreate(
+                ['slug' => $data['slug'], 'category_id' => $elektronik->id],
+                [
+                    'name' => $data['name'],
+                    'category_id' => $elektronik->id,
+                ]
+            );
         }
 
-        if (!in_array('laptop', $existing)) {
-            $data[] = [
-                'category_id' => $elektronik->id,
-                'name' => 'Laptop',
-                'slug' => 'laptop',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
-        }
-
-        if (!empty($data)) {
-            SubCategories::insert($data);
-            echo "Subkategori baru berhasil ditambahkan: " . implode(', ', array_column($data, 'name')) . "\n";
-        } else {
-            echo "Semua subkategori sudah ada. Tidak ada data baru ditambahkan.\n";
-        }
+        echo "Subkategori berhasil ditambahkan atau sudah ada sebelumnya.\n";
     }
 }

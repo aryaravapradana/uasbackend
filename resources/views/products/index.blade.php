@@ -35,6 +35,12 @@
 
         a { text-decoration: none; color: inherit; }
 
+        .navbar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
         .main-header {
             background-color: var(--white);
             padding: 1rem 5%;
@@ -150,6 +156,7 @@
 </head>
 <body>
     <header class="main-header">
+        <div class="navbar-container">
         <div style="display: flex; align-items: center; gap: 1.5rem; width: 100%;">
             <a href="{{ route('home') }}">
                 <img src="{{ asset('images/Tokopedia_Mascot.png') }}" alt="TokoClone Logo" class="logo">
