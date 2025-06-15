@@ -16,11 +16,12 @@ class SubCategoryController extends Controller
         $products = Product::where('subcategory_id', $sub->id)->paginate(12);
 
         session(['from_homepage' => true]);
-        
+
         return view('products.by_subcategory', [
             'subcategory' => $sub,
             'products' => $products
         ]);
     }
+    
 }
 

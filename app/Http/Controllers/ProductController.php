@@ -16,10 +16,8 @@ class ProductController extends Controller
      */
    public function index()
     {
-        $products = Product::latest()->paginate(4);
-        $categories = Category::with('subcategories')->get();
-
-        return view('products.index', compact('products', 'categories'));
+        $recommended = Product::inRandomOrder()->take(10)->get();
+        return view('products.index', compact('recommended'));
     }
 
 
@@ -128,12 +126,18 @@ class ProductController extends Controller
      * Menggantikan searchProduct().
      */
     
-  public function search(Request $request)
+    public function search(Request $request)
     {
-        $query = $request->input('q');
-        $products = \App\Models\Product::where('name', 'like', '%' . $query . '%')
-                                   ->orWhere('description', 'like', '%' . $query . '%')
-                                   ->get();
+        $query = $request->input('query'); 
+
+        $products = Product::where(function ($q) use ($query) {
+            $q->where('name', 'like', "%{$query}%")
+            ->orWhere('description', 'like', "%{$query}%");
+        })
+        ->orWhereHas('subcategory', function ($q) use ($query) {
+            $q->where('name', 'like', "%{$query}%");
+        })
+        ->get();
 
         if ($products->isEmpty()) {
             abort(404);

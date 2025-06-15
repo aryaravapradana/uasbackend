@@ -41,6 +41,136 @@
             width: 100%;
         }
 
+        .scroll-horizontal.active {
+            cursor: grabbing;
+        }
+
+        .scroll-horizontal {
+            cursor: grab;
+            user-select: none;
+        }
+        .scroll-horizontal.active {
+            cursor: grabbing;
+        }
+
+        .product-slider-section {
+            margin-top: 2rem;
+            position: relative;
+        }
+
+        .section-title {
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #4F9D4D;
+            display: inline-block;
+        }
+
+        .slider-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .scroll-horizontal {
+            display: flex;
+            overflow-x: auto;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            cursor: grab;
+            scroll-behavior: smooth;
+        }
+
+        .scroll-horizontal::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .scroll-horizontal {
+            display: flex;
+            overflow-x: auto;
+            gap: 1.25rem; 
+            padding: 1rem 0;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+        }
+
+        .product-card {
+            min-width: 280px;
+            max-width: 280px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            scroll-snap-align: start;
+            flex-shrink: 0;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s ease;
+        }
+
+        .product-card:hover {
+            transform: scale(1.02);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        .product-info {
+            padding: 0.75rem;
+        }
+
+        .product-name {
+            font-size: 0.95rem;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-price {
+            font-weight: bold;
+            color: #10b981;
+            margin: 0;
+        }
+
+        .product-stock {
+            font-size: 0.75rem;
+            color: #6b7280;
+        }
+
+        .slider-btn {
+            position: absolute;
+            top: 40%;
+            transform: translateY(-50%);
+            background-color: #ffffffcc;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            z-index: 2;
+        }
+
+        .slider-btn:hover {
+            background-color: #e5e7eb;
+        }
+
+        .slider-btn.left {
+            left: -18px;
+        }
+
+        .slider-btn.right {
+            right: -18px;
+        }
+
         .main-header {
             background-color: var(--white);
             padding: 1rem 5%;
@@ -238,30 +368,31 @@
                 @endforeach
             </div>
         </section>
-        <section class="products">
-            <h2>Rekomendasi Untukmu</h2>
-            <div class="product-grid">
-                @forelse ($products as $product)
-                    <a href="{{ route('products.show', $product) }}" class="product-card">
-                        <div class="product-image">
-                            <img src="{{ $product->image_url ?? 'https://via.placeholder.com/300' }}" alt="{{ $product->name }}">
-                        </div>
-                        <div class="product-info">
-                            <h3>{{ $product->name }}</h3>
-                            <p class="price">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
-                        </div>
-                        <div class="product-overlay">
-                            <div class="overlay-content">
-                                <p class="stock">Stok: {{ $product->stock }}</p>
-                            </div>
-                        </div>
-                    </a>
-                @empty
-                    <p>Tidak ada produk untuk ditampilkan.</p>
-                @endforelse
-            </div>
-        </section>
-    </main>
-    <script src="{{ asset('js/kategori.js') }}"></script>
+        <section class="product-slider-section">
+    <h2 class="section-title">Rekomendasi Untukmu</h2>
+
+    <div class="slider-wrapper">
+        <button class="slider-btn left" onclick="scrollProducts(-1)">&#10094;</button>
+
+        <div id="rekomendasiContainer" class="scroll-horizontal">
+            @foreach ($recommended as $product)
+                <a href="{{ route('products.show', $product) }}" class="product-card">
+                    <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="product-image">
+
+                    <div class="product-info">
+                        <h3 class="product-name">{{ $product->name }}</h3>
+                        <p class="product-price">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                        <p class="product-stock">Stok: {{ $product->stock }}</p>
+                    </div>
+                </a>
+            @endforeach
+        </div>
+
+        <button class="slider-btn right" onclick="scrollProducts(1)">&#10095;</button>
+    </div>
+</section>
+</main>
+<script src="{{ asset('js/kategori.js') }}"></script>
+<script src="{{ asset('js/scroll-drag.js') }}"></script>
 </body>
 </html>

@@ -28,7 +28,8 @@
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
         {{-- Gambar Produk --}}
         <div>
-            <img src="{{ $product->image_url }}" alt="{{ $product->name }}" style="width: 100%; border-radius: 10px;">
+            <img src="{{ $product->image_url }}" alt="{{ $product->name }}">
+
         </div>
         
         {{-- Detail Produk --}}
@@ -39,7 +40,7 @@
             </p>
             <p style="margin-bottom: 1rem;">Stok: {{ $product->stock }}</p>
             <p style="margin-bottom: 1rem; color: #6b7280;">
-                {{ $product->subcategory->category->name ?? '-' }} / {{ $product->subcategory->name }}
+                {{ $product->subcategory->category->name ?? '-' }}
             </p>
             <p style="margin-bottom: 1rem; color: #6b7280;">
                 Ditambahkan pada: {{ $product->created_at->format('d M Y') }}

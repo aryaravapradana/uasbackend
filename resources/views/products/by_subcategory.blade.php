@@ -23,6 +23,8 @@
                 <a href="{{ route('products.show', $product->id) }}" style="text-decoration: none; color: inherit;">
                     <div class="product-card">
                         <img src="{{ $product->image_url }}" alt="{{ $product->name }}">
+
+
                         <div class="product-info">
                             <h3>{{ $product->name }}</h3>
                             <p class="price">
@@ -40,9 +42,37 @@
             @endforeach
         </div>
 
-        <div style="margin-top: 2rem;">
-            {{ $products->links() }}
-        </div>
+        <div class="pagination-container">
+    <div>
+        Showing {{ $products->firstItem() }} to {{ $products->lastItem() }} of {{ $products->total() }} results
+    </div>
+
+    <ul class="pagination">
+        {{-- Prev --}}
+        @if ($products->onFirstPage())
+            <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+        @else
+            <li class="page-item"><a class="page-link" href="{{ $products->previousPageUrl() }}">&laquo;</a></li>
+        @endif
+
+        {{-- Page number --}}
+        @for ($i = 1; $i <= $products->lastPage(); $i++)
+            <li class="page-item {{ $i == $products->currentPage() ? 'active' : '' }}">
+                <a class="page-link" href="{{ $products->url($i) }}">{{ $i }}</a>
+            </li>
+        @endfor
+
+        {{-- Next --}}
+        @if ($products->hasMorePages())
+            <li class="page-item"><a class="page-link" href="{{ $products->nextPageUrl() }}">&raquo;</a></li>
+        @else
+            <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+        @endif
+        <link rel="stylesheet" href="{{ asset('css/product-card.css') }}">
+    </ul>
+</div>
+
+
     @else
         <div style="padding: 2rem; background: #f3f4f6; text-align: center; border-radius: 8px;">
             Tidak ada produk untuk subkategori ini.
