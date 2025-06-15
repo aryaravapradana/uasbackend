@@ -67,12 +67,12 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsTo(Categories::class, 'category_id');
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
     public function subcategory()
     {
-        return $this->belongsTo(SubCategories::class, 'subcategory_id');
+        return $this->belongsTo(SubCategory::class, 'subcategory_id');
     }
 
 

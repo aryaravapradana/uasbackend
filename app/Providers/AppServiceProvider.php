@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-use App\Models\Categories;
+use App\Models\Category;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
             View::composer('*', function ($view) {
-                $view->with('allCategories', Categories::with('subcategories')->get());
+                $view->with('allCategories', Category::with('subcategories')->get());
         });
     }
 }

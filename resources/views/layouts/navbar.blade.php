@@ -1,23 +1,52 @@
-<!-- Navigation Links -->
-<div class="flex space-x-8 sm:-my-px sm:ms-10">
-    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-        {{ __('Dashboard') }}
-    </x-nav-link>
+<header class="bg-white shadow">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
 
-    <div class="flex items-center px-6 py-2 bg-white shadow">
-    <img src="/logo.png" class="w-10 h-10">
-    
-    <form class="ml-4 flex">
-        <input type="text" class="rounded-l px-4 py-2 w-96" placeholder="Cari di TokoClone">
-        <button class="bg-green-500 px-4 rounded-r text-white">🔍</button>
-    </form>
-</div>
+        {{-- KIRI: Logo & Dropdown --}}
+        <div class="flex items-center gap-6">
+            {{-- Logo --}}
+            <a href="{{ route('home') }}">
+                <img src="{{ asset('img/logo.png') }}" alt="Logo" class="h-8">
+            </a>
 
-    <!-- FORM SEARCH PRODUK -->
-    <form action="{{ route('products.search') }}" method="GET" class="flex items-center">
-        <input type="text" name="q" placeholder="Cari produk..."
-            class="border rounded px-2 py-1 text-sm text-black bg-white" required>
-        <button type="submit" class="ml-2 bg-green-600 text-white px-3 py-1 rounded text-sm">Cari</button>
-    </form>
+            {{-- Dropdown Kategori --}}
+            <div class="relative">
+                <div onclick="document.querySelector('.kategori-dropdown').classList.toggle('hidden')"
+                     class="cursor-pointer text-sm font-semibold text-gray-800 hover:text-green-600">
+                    Kate
+                </div>
+                <div class="kategori-dropdown hidden absolute bg-white border shadow-lg mt-2 w-64 z-50 max-h-80 overflow-y-auto">
+                    @foreach ($categories as $kategori)
+                        <div class="p-3 border-b">
+                            <div class="font-bold text-sm text-gray-700 mb-1">{{ $kategori->name }}</div>
+                            <ul class="ml-4 list-disc text-sm text-gray-600 space-y-1">
+                                @foreach ($kategori->subcategories as $sub)
+                                    <li>
+                                        <a href="{{ url('/kategori/' . $sub->slug) }}" class="hover:text-green-600">
+                                            {{ $sub->name }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
 
-</div>
+        {{-- TENGAH: Search --}}
+        <form action="{{ route('products.search') }}" method="GET" class="flex flex-1 justify-center max-w-xl mx-6">
+            <input type="text" name="q" placeholder="Cari di TokoClone..."
+                   class="w-full px-4 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring focus:ring-green-500">
+            <button type="submit" class="bg-green-600 px-4 py-2 rounded-r-md text-white hover:bg-green-700">
+                🔍
+            </button>
+        </form>
+
+        {{-- KANAN: User Info --}}
+        <div class="flex items-center gap-4 text-sm">
+            <a href="{{ route('order.history') }}" class="text-gray-600 hover:text-green-600">Riwayat Pesanan</a>
+            <span class="font-medium text-gray-800">{{ Auth::user()->name }}</span>
+            <a href="{{ route('logout') }}" class="text-gray-500 hover:text-red-600">Logout</a>
+        </div>
+    </div>
+</header>
