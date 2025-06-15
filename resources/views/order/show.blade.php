@@ -12,6 +12,8 @@
 <body class="bg-gray-100 py-8">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 bg-white p-8 rounded-lg shadow-lg">
         <h1 class="text-3xl font-bold text-gray-800 mb-6">Detail Pesanan #{{ $order->id }}</h1>
+       <img src="{{ $product->image_url }}" alt="{{ $product->name }}">
+
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div>
@@ -40,7 +42,7 @@
             <div class="space-y-4">
                 @foreach ($order->items as $item)
                     <div class="flex items-center space-x-4 border p-4 rounded-lg bg-gray-50">
-                        <img src="{{ $item->product->image_url ?? 'https://placehold.co/80x80/cccccc/333333?text=Produk' }}" alt="{{ $item->product->name ?? 'Produk' }}" class="w-20 h-20 object-cover rounded-md">
+                        
                         <div class="flex-1">
                             <h3 class="text-lg font-semibold text-gray-800">{{ $item->product->name ?? 'Produk Tidak Ditemukan' }}</h3>
                             <p class="text-gray-600 text-sm">Jumlah: {{ $item->quantity }}</p>

@@ -7,7 +7,7 @@
      style="display: none; position: absolute; top: 100%; left: 0; background: white;
             border: 1px solid #ddd; padding: 1rem; width: 260px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); z-index: 999;
             max-height: 300px; overflow-y: auto;">
-        @foreach ($categories as $kategori)
+       @foreach ($allCategories as $kategori)
             <div style="margin-bottom: 0.75rem;">
                 <p style="font-weight: bold; font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem; color: #1F2937;">
                     <i class="fas {{ $categoryIcons[$kategori->name] ?? 'fa-tag' }}"></i>
