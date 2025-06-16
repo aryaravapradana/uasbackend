@@ -60,4 +60,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/order-history', [OrderController::class, 'history'])->name('order.history');
 
+    Route::get('/shops', [ShopsController::class, 'getShop'])->name('getShop');
+    Route::get('/shops/{id}', [ShopsController::class, 'getShops'])->name('getShops');
+
 });
