@@ -16,10 +16,7 @@ class Shop extends Model
         'name',
         'description',
         'address',
-        // Tambahkan kolom lain sesuai kebutuhan, misal:
-        // 'logo_path',
-        // 'contact_email',
-        // 'is_active',
+
     ];
 
     /**
