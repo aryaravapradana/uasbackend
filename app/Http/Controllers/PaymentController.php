@@ -68,7 +68,9 @@ class PaymentController extends Controller
             return response()->json(['message' => 'Gagal menginisiasi pembayaran.', 'error' => $th->getMessage()], 500);
         }
     }
-    // old code that simulates stupid fucking payment gateway and could fail sometimes 
+    // old code that simulates stupid fucking payment gateway and could fail sometimes
+    // basically this line of codes are used to show failed payment, but the only way to get payment failed
+    // is if the total amount of money that need to be paid is % 2 = 1 or an odd number
     // public function initiatePayment(Request $request)
     // {
     //     $request->validate([
