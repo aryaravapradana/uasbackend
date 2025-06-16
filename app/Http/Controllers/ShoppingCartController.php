@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ShoppingCart;
-use App\Models\Product; // Pastikan Product diimpor
+use App\Models\Product; 
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
@@ -94,9 +94,9 @@ class ShoppingCartController extends Controller
             'success' => true,
             'message' => 'Kuantitas berhasil diperbarui.',
             'newQuantity' => $cartItem->quantity,
-            'pricePerUnit' => $pricePerUnit, // Mengembalikan harga per unit produk
-            'newItemTotal' => number_format($newItemTotal, 0, ',', '.'), // Total harga item ini yang baru
-            'overallTotalAmount' => number_format($overallTotalAmount, 0, ',', '.') // Total keseluruhan keranjang
+            'pricePerUnit' => $pricePerUnit, 
+            'newItemTotal' => number_format($newItemTotal, 0, ',', '.'), 
+            'overallTotalAmount' => number_format($overallTotalAmount, 0, ',', '.') 
         ]);
     }
 
@@ -104,14 +104,14 @@ class ShoppingCartController extends Controller
     {
         $request->validate([
             'address' => 'required|string|max:255',
-            'phone' => 'required|string|max:20', // Input 'phone' dari form
-            'selected_items_id' => 'required|string', // String CSV dari ID item keranjang
+            'phone' => 'required|string|max:20', 
+            'selected_items_id' => 'required|string', 
             'notes' => 'nullable|string|max:500',
         ]);
 
         $user = Auth::user();
         $selectedCartItemIds = explode(',', $request->input('selected_items_id'));
-        $selectedCartItemIds = array_filter($selectedCartItemIds); // Menghapus ID kosong jika ada
+        $selectedCartItemIds = array_filter($selectedCartItemIds); 
 
         if (empty($selectedCartItemIds)) {
             return redirect()->back()->with('error', 'Pilih setidaknya satu item untuk melanjutkan pembayaran.');
@@ -119,7 +119,7 @@ class ShoppingCartController extends Controller
 
         DB::beginTransaction();
         try {
-            // Ambil item keranjang yang dipilih oleh pengguna
+            
             $cartItems = ShoppingCart::whereIn('id', $selectedCartItemIds)
                                      ->where('user_id', $user->id)
                                      ->with('product')
@@ -150,30 +150,30 @@ class ShoppingCartController extends Controller
                 }
             }
 
-            // Buat Order baru
+            
             $order = Order::create([
                 'user_id' => $user->id,
                 'total_amount' => $totalAmount,
                 'status' => 'unpaid',
                 'address' => $request->address,
-                'shipping_address' => $request->address, // Mengisi kolom 'shipping_address'
-                'phone' => $request->phone, // Mengisi kolom 'phone' dari request
+                'shipping_address' => $request->address,
+                'phone' => $request->phone, 
                 'notes' => $request->notes,
                 'order_date' => now(),
-                // Pastikan kolom-kolom ini ada di tabel 'orders' dan fillable di model Order
-                'billing_address' => $request->address, // Asumsi billing_address juga sama dengan alamat
-                'payment_method' => 'default', // Atur default jika tidak ada input dari form
-                'payment_status' => 'pending', // Atur default jika tidak ada input dari form
+                
+                'billing_address' => $request->address, 
+                'payment_method' => 'default', 
+                'payment_status' => 'pending', 
             ]);
 
             $order->items()->saveMany($orderItemsData);
 
-            // Hapus item dari keranjang yang sudah di-checkout
+            
             ShoppingCart::whereIn('id', $selectedCartItemIds)
                         ->where('user_id', $user->id)
                         ->delete();
 
-            // Memanggil PaymentController (asumsi ada dan berfungsi)
+            
             $paymentController = app(\App\Http\Controllers\PaymentController::class);
             $paymentResponse = $paymentController->initiatePayment(
                 Request::create('/api/payments/initiate', 'POST', [
