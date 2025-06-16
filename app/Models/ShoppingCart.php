@@ -10,9 +10,6 @@ class ShoppingCart extends Model
 {
     use HasFactory;
 
-    /**
-     * Kolom yang diizinkan untuk mass assignment.
-     */
     protected $fillable = [
         'user_id',
         'product_id',
