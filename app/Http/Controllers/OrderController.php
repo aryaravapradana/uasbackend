@@ -9,15 +9,19 @@ use Illuminate\Support\Facades\Auth;
 class OrderController extends Controller
 {
     public function show(Order $order)
-    {
-        if ($order->user_id !== Auth::id()) {
-            abort(403);
-        }
-
-        $order->load(['items.product', 'payment']);
-
-        return view('order.show', compact('order'));
+{
+    if ($order->user_id !== Auth::id()) {
+        abort(403);
     }
+
+    $order->load(['items.product', 'payment']);
+
+    // Ambil produk pertama dari relasi item (kalau hanya 1 produk per order)
+    $product = $order->items->first()->product ?? null;
+
+    return view('order.show', compact('order', 'product'));
+}
+
 
     public function history()
     {

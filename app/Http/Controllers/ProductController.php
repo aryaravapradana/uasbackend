@@ -16,7 +16,7 @@ class ProductController extends Controller
      */
    public function index()
     {
-        $recommended = Product::inRandomOrder()->take(10)->get();
+        $recommended = Product::inRandomOrder()->take(25)->get();
         return view('products.index', compact('recommended'));
     }
 
