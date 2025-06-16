@@ -12,7 +12,6 @@ class SubCategoryController extends Controller
     {
         $sub = SubCategory::where('slug', $slug)->firstOrFail();
 
-        // Ambil produk yang punya subkategori ini
         $products = Product::where('subcategory_id', $sub->id)->paginate(12);
 
         session(['from_homepage' => true]);
