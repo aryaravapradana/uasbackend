@@ -55,7 +55,7 @@ class SubCategorySeeder extends Seeder
             ]);
         }
         
-        // === KATEGORI & SUBKATEGORI FASHION (Tambahan) ===
+        // === KATEGORI & SUBKATEGORI FASHION ===
         $fashion = Category::firstOrCreate([
             'slug' => 'fashion'
         ], [
@@ -69,6 +69,36 @@ class SubCategorySeeder extends Seeder
             ], [
                 'name' => $sub,
                 'category_id' => $fashion->id
+            ]);
+        }
+        // === KATEGORI & SUBKATEGORI KECANTIKAN ===
+        $kecantikan = Category::firstOrCreate(
+            ['slug' => 'kecantikan'],
+            ['name' => 'Kecantikan']
+        );
+
+        $kecantikanSubs = ['Skincare', 'Makeup', 'Parfum', 'Sabun', 'Shampoo', 'Body Lotion', 'Lipstick', 'Masker Wajah', 'Eyebrow', 'Foundation'];
+        foreach ($kecantikanSubs as $sub) {
+            SubCategory::firstOrCreate([
+                'slug' => strtolower(str_replace(' ', '-', $sub))
+            ], [
+                'name' => $sub,
+                'category_id' => $kecantikan->id
+            ]);
+        }
+
+        // === KATEGORI & SUBKATEGORI HOBI ===
+        $hobi = Category::firstOrCreate(
+            ['slug' => 'hobi'],
+            ['name' => 'Hobi']
+        );
+        $hobiSubs = ['Game', 'Puzzle', 'Model Kit', 'Buku', 'Alat Musik', 'Drone', 'Kamera Analog', 'Kartu Koleksi', 'Kerajinan', 'Lego'];
+        foreach ($hobiSubs as $sub) {
+            SubCategory::firstOrCreate([
+                'slug' => strtolower(str_replace(' ', '-', $sub))
+            ], [
+                'name' => $sub,
+                'category_id' => $hobi->id
             ]);
         }
         
