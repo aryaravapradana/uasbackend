@@ -352,27 +352,7 @@
     </header>
     <!-- Main Content -->
     <main class="container">
-        <section class="categories">
-            <h2>Kategori</h2>
-            <div class="category-grid">
-                @php
-                    $categories = [
-                        ['name' => 'Elektronik', 'icon' => 'fa-laptop'],
-                        ['name' => 'Fashion', 'icon' => 'fa-tshirt'],
-                        ['name' => 'Rumah Tangga', 'icon' => 'fa-couch'],
-                        ['name' => 'Olahraga', 'icon' => 'fa-futbol'],
-                        ['name' => 'Hobi', 'icon' => 'fa-gamepad'],
-                        ['name' => 'Kecantikan', 'icon' => 'fa-gem'],
-                    ];
-                @endphp
-                @foreach($categories as $category)
-                    <a href="#" class="category-item">
-                        <div class="icon"><i class="fas {{ $category['icon'] }}"></i></div>
-                        <span>{{ $category['name'] }}</span>
-                    </a>
-                @endforeach
-            </div>
-        </section>
+        
 
         <!-- Rekomendasi -->
         <section class="product-slider-section">

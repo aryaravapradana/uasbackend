@@ -16,6 +16,18 @@
     <h2 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">
         {{ $subcategory->name }}
     </h2>
+    <form action="{{ route('products.search') }}" method="GET">
+    <input type="text" name="query" placeholder="Mau Cari {{ strtolower($subcategory->name) }} Yang apa?"
+           style="padding: 0.5rem 1rem; border: 1px solid #d1d5db; border-radius: 6px; width: 300px;">
+    
+    <input type="hidden" name="subcategory" value="{{ $subcategory->slug }}">
+
+    <button type="submit"
+            style="padding: 0.5rem 1rem; background-color:rgb(3, 172, 14); color: white; border: none; border-radius: 6px; margin-left: 0.5rem;">
+        Cari
+    </button>
+</form>
+
 
     @if ($products->count())
         <div class="product-grid">

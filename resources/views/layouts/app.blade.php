@@ -32,14 +32,7 @@
         </div>
 
         {{-- Search Bar --}}
-        <form action="{{ route('products.search') }}" method="GET" style="flex: 1; display: flex; max-width: 600px; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
-            <input type="text" name="q" placeholder="Cari di TokoClone..."
-                   style="flex: 1; padding: 0.65rem 1rem; border: none; font-size: 0.95rem;">
-            <button type="submit"
-                    style="background-color: #059669; color: white; border: none; padding: 0 1rem; cursor: pointer;">
-                <i class="fas fa-search"></i>
-            </button>
-        </form>
+      
 
         {{-- Avatar + Nama User --}}
     @auth
