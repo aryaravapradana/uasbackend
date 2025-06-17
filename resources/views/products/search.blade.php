@@ -100,7 +100,10 @@
                     <div class="product-info">
                         <h3>{{ $product->name }}</h3>
                         <p class="price">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
-                        <p class="meta">{{ $product->subcategory->category->name }} / {{ $product->subcategory->name }}<br>Stok: {{ $product->stock }}</p>
+                        <p class="meta">
+                            {{ $product->subcategory?->category?->name ?? '-' }} /
+                            {{ $product->subcategory?->name ?? '-' }}
+                        </p>
                     </div>
                 </a>
             @endforeach

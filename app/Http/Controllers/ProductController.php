@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Shop;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth; 
 
 class ProductController extends Controller
@@ -100,24 +101,51 @@ class ProductController extends Controller
     }
 
 
-    
-    public function search(Request $request)
-    {
-        $query = $request->input('query'); 
 
-        $products = Product::where(function ($q) use ($query) {
-            $q->where('name', 'like', "%{$query}%")
-            ->orWhere('description', 'like', "%{$query}%");
-        })
-        ->orWhereHas('subcategory', function ($q) use ($query) {
-            $q->where('name', 'like', "%{$query}%");
-        })
-        ->get();
+public function search(Request $request)
+{
+    $query = $request->input('query');
+    $subcategorySlug = $request->input('subcategory'); // pakai SLUG
 
-        if ($products->isEmpty()) {
-            abort(404);
-        }
+    $normalizedQuery = Str::lower(trim(preg_replace('/\s+/', ' ', $query)));
+    $keywords = explode(' ', $normalizedQuery);
 
-        return view('products.search', compact('products', 'query'));
+    $products = Product::query();
+
+    // ✅ FILTER BERDASARKAN SLUG SUBKATEGORI
+    if (!empty($subcategorySlug)) {
+        $products->whereHas('subcategory', function ($q) use ($subcategorySlug) {
+            $q->where('slug', $subcategorySlug);
+        });
     }
+
+    // ✅ FILTER NAMA SESUAI KEYWORDS
+    foreach ($keywords as $keyword) {
+        $products->whereRaw('LOWER(name) LIKE ?', ["%{$keyword}%"]);
+    }
+
+    // ✅ OPSIONAL: tambahkan match deskripsi / subkategori name
+    $products->orWhereRaw('LOWER(description) LIKE ?', ["%{$normalizedQuery}%"])
+             ->orWhereHas('subcategory', function ($q) use ($normalizedQuery) {
+                 $q->whereRaw('LOWER(name) LIKE ?', ["%{$normalizedQuery}%"]);
+             });
+
+    // ✅ SORTING: relevansi
+    $products->orderByRaw("POSITION(? IN LOWER(name))", [$normalizedQuery]);
+
+    $results = $products->get();
+
+    if ($results->isEmpty()) {
+        abort(404, 'Produk tidak ditemukan.');
+    }
+
+    return view('products.search', [
+        'products' => $results,
+        'query' => $query
+    ]);
+}
+
+
+
+
 }
