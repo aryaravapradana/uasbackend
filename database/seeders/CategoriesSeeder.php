@@ -48,7 +48,7 @@ class CategoriesSeeder extends Seeder
         ]);
 
         // SUBKATEGORI ELEKTRONIK
-        $elektronikSubs = ['HP', 'Laptop', 'Tablet', 'TV', 'Monitor', 'Kamera', 'Headphone', 'Smartwatch', 'Speaker', 'Printer'];
+        $elektronikSubs = ['HP', 'Laptop', 'Kulkas', 'TV', 'Monitor', 'Kamera', 'Headphone', 'Smartwatch', 'Speaker', 'Printer'];
         foreach ($elektronikSubs as $sub) {
             SubCategory::firstOrCreate([
                 'slug' => strtolower($sub)

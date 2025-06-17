@@ -12,9 +12,7 @@
 <body class="bg-gray-100 py-8">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 bg-white p-8 rounded-lg shadow-lg">
         <h1 class="text-3xl font-bold text-gray-800 mb-6">Detail Pesanan #{{ $order->id }}</h1>
-       <img src="{{ $product->image_url }}" alt="{{ $product->name }}">
-
-
+       <img src="{{ asset($product->image_url) }}" alt="{{ $product->name }}">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div>
                 <h2 class="text-xl font-semibold text-gray-700 mb-3">Informasi Pesanan</h2>

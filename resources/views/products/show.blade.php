@@ -24,8 +24,7 @@
 <main style="max-width: 1000px; margin: 2rem auto; padding: 1rem;">
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
         <div>
-            <img src="{{ $product->image_url }}" alt="{{ $product->name }}">
-        
+            <img src="{{ asset($product->image_url) }}" alt="{{ $product->name }}">
         <div>
             <h1 style="font-size: 1.8rem; font-weight: bold; margin-bottom: 0.5rem;">{{ $product->name }}</h1>
             <p style="font-size: 1.5rem; color: #16a34a; margin: 0.5rem 0;">
