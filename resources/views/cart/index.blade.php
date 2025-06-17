@@ -8,20 +8,19 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
-        /* Tambahan styling untuk checkbox (jika diperlukan) */
         .form-checkbox {
             appearance: none;
             display: inline-block;
-            width: 1.25rem; /* 20px */
-            height: 1.25rem; /* 20px */
-            border: 2px solid #6366f1; /* text-indigo-600 */
-            border-radius: 0.25rem; /* rounded */
+            width: 1.25rem; 
+            height: 1.25rem; 
+            border: 2px solid #6366f1;
+            border-radius: 0.25rem;
             vertical-align: middle;
             position: relative;
             cursor: pointer;
         }
         .form-checkbox:checked {
-            background-color: #6366f1; /* text-indigo-600 */
+            background-color: #6366f1; 
             border-color: #6366f1;
         }  
         .form-checkbox:checked::after {
@@ -29,8 +28,8 @@
             position: absolute;
             left: 50%;
             top: 50%;
-            width: 0.35em; /* perkiraan ukuran centang */
-            height: 0.7em; /* perkiraan ukuran centang */
+            width: 0.35em; 
+            height: 0.7em; 
             border: solid white;
             border-width: 0 0.15em 0.15em 0;
             transform: translate(-50%, -50%) rotate(45deg);
@@ -148,7 +147,6 @@
             const selectedItemsIdInput = document.getElementById('selected-items-id');
             const checkoutForm = document.getElementById('checkout-form');
 
-            // Fungsi untuk menghitung ulang total belanja
             function calculateGrandTotal() {
                 let total = 0;
                 let selectedIds = [];
@@ -162,19 +160,16 @@
                         selectedIds.push(itemId);
                     }
                 });
-                overallTotalAmountSpan.textContent = 'Rp ' + number_format(total, 0, ',', '.'); // Gunakan number_format
+                overallTotalAmountSpan.textContent = 'Rp ' + number_format(total, 0, ',', '.'); 
                 selectedItemsIdInput.value = selectedIds.join(',');
             }
 
-            // Inisialisasi total saat halaman dimuat
             calculateGrandTotal();
 
-            // Event listener untuk checkbox
             itemCheckboxes.forEach(checkbox => {
                 checkbox.addEventListener('change', calculateGrandTotal);
             });
 
-            // Event listener untuk tombol +/- kuantitas
             document.querySelectorAll('.update-qty-btn').forEach(button => {
                 button.addEventListener('click', function() {
                     const itemId = this.dataset.id;
@@ -209,16 +204,15 @@
                     })
                     .then(data => {
                         if (data.success) {
-                            quantitySpan.textContent = data.newQuantity; // Update quantity di tampilan
-                            document.getElementById(`item-total-${itemId}`).textContent = `Rp ${data.newItemTotal}`; // Update total per item
+                            quantitySpan.textContent = data.newQuantity; 
+                            document.getElementById(`item-total-${itemId}`).textContent = `Rp ${data.newItemTotal}`; 
                             
-                            // Update data-item-price di checkbox agar perhitungan grand total akurat
                             const checkbox = document.querySelector(`.item-checkbox[data-item-id="${itemId}"]`);
                             if (checkbox) {
-                                checkbox.dataset.itemPrice = data.pricePerUnit; // Ini harus harga per unit produk
+                                checkbox.dataset.itemPrice = data.pricePerUnit; 
                             }
                             
-                            calculateGrandTotal(); // Hitung ulang total belanja keseluruhan
+                            calculateGrandTotal(); 
                         } else {
                             console.error('Error:', data.message || 'Gagal memperbarui kuantitas.');
                             alert('Gagal memperbarui kuantitas: ' + (data.message || 'Silakan coba lagi.'));
@@ -231,16 +225,14 @@
                 });
             });
 
-            // Pencegahan submit jika tidak ada item yang dipilih
             checkoutForm.addEventListener('submit', function(event) {
                 const selectedIds = selectedItemsIdInput.value;
                 if (!selectedIds) {
                     alert('Pilih setidaknya satu item untuk melanjutkan pembayaran.');
-                    event.preventDefault(); // Batalkan submit form
+                    event.preventDefault(); 
                 }
             });
 
-            // Helper function untuk format angka (dari PHP ke JS)
             function number_format(number, decimals, decPoint, thousandsSep) {
                 number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
                 var n = !isFinite(+number) ? 0 : +number,
