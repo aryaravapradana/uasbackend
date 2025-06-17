@@ -22,8 +22,7 @@
             @foreach ($products as $product)
                 <a href="{{ route('products.show', $product->id) }}" style="text-decoration: none; color: inherit;">
                     <div class="product-card">
-                        <img src="{{ $product->image_url }}" alt="{{ $product->name }}">
-
+                        <img src="{{ asset($product->image_url) }}" alt="{{ $product->name }}">
 
                         <div class="product-info">
                             <h3>{{ $product->name }}</h3>
@@ -71,8 +70,6 @@
         <link rel="stylesheet" href="{{ asset('css/product-card.css') }}">
     </ul>
 </div>
-
-
     @else
         <div style="padding: 2rem; background: #f3f4f6; text-align: center; border-radius: 8px;">
             Tidak ada produk untuk subkategori ini.

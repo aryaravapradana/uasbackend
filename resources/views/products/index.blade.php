@@ -118,10 +118,13 @@
         .product-image {
             width: 100%;
             height: 220px;
-            object-fit: cover;
+            object-fit: contain;
+            object-position: center;
+            background-color: #f9fafb;
             border-top-left-radius: 12px;
             border-top-right-radius: 12px;
         }
+
 
         .product-info {
             padding: 0.75rem;
@@ -312,6 +315,7 @@
                     </button>
                 </form>
             </div>
+            <!-- User Navigation -->
             <nav class="user-nav">
                 @auth
                     <a href="{{ route('cart.index') }}">
@@ -346,6 +350,7 @@
             </nav>
         </div>
     </header>
+    <!-- Main Content -->
     <main class="container">
         <section class="categories">
             <h2>Kategori</h2>
@@ -368,30 +373,28 @@
                 @endforeach
             </div>
         </section>
+
+        <!-- Rekomendasi -->
         <section class="product-slider-section">
-    <h2 class="section-title">Rekomendasi Untukmu</h2>
-
-    <div class="slider-wrapper">
-        <button class="slider-btn left" onclick="scrollProducts(-1)">&#10094;</button>
-
-        <div id="rekomendasiContainer" class="scroll-horizontal">
-            @foreach ($recommended as $product)
-                <a href="{{ route('products.show', $product) }}" class="product-card">
-                    <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="product-image">
-
-                    <div class="product-info">
-                        <h3 class="product-name">{{ $product->name }}</h3>
-                        <p class="product-price">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
-                        <p class="product-stock">Stok: {{ $product->stock }}</p>
-                    </div>
-                </a>
-            @endforeach
-        </div>
-
-        <button class="slider-btn right" onclick="scrollProducts(1)">&#10095;</button>
-    </div>
-</section>
-</main>
+            <h2 class="section-title">Rekomendasi Untukmu</h2>
+            <div class="slider-wrapper">
+                <button class="slider-btn left" onclick="scrollProducts(-1)">&#10094;</button>
+                <div id="rekomendasiContainer" class="scroll-horizontal">
+                    @foreach ($recommended as $product)
+                        <a href="{{ route('products.show', $product) }}" class="product-card">
+                            <img src="{{ asset($product->image_url) }}" alt="{{ $product->name }}" class="product-image">
+                            <div class="product-info">
+                                <h3 class="product-name">{{ $product->name }}</h3>
+                                <p class="product-price">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                                <p class="product-stock">Stok: {{ $product->stock }}</p>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+                <button class="slider-btn right" onclick="scrollProducts(1)">&#10095;</button>
+            </div>
+        </section>
+    </main>
 <script src="{{ asset('js/kategori.js') }}"></script>
 <script src="{{ asset('js/scroll-drag.js') }}"></script>
 </body>

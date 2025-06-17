@@ -101,7 +101,23 @@ class SubCategorySeeder extends Seeder
                 'category_id' => $hobi->id
             ]);
         }
-        
+
+        // === KATEGORI & SUBKATEGORI OLAHRAGA ===
+        $olahraga = Category::firstOrCreate(
+            ['slug' => 'olahraga'],
+            ['name' => 'Olahraga']
+        );
+
+        $olahragaSubs = ['Bola', 'Raket', 'Sepatu Olahraga', 'Matras', 'Dumbbell', 'Jersey', 'Sepeda', 'Kacamata Renang', 'Pelindung Lutut', 'Skateboard'];
+
+        foreach ($olahragaSubs as $sub) {
+            SubCategory::firstOrCreate([
+                'slug' => strtolower(str_replace(' ', '-', $sub))
+            ], [
+                'name' => $sub,
+                'category_id' => $olahraga->id
+            ]);
+        }
         echo "Subkategori berhasil ditambahkan atau sudah ada sebelumnya.\n";
     }
 }

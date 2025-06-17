@@ -2,15 +2,32 @@ document.addEventListener('DOMContentLoaded', function () {
     const toggle = document.querySelector('.kategori-toggle');
     const dropdown = document.querySelector('.kategori-dropdown');
 
-    if (toggle && dropdown) {
-        toggle.addEventListener('click', function () {
-            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-        });
+    let visible = false;
 
-        document.addEventListener('click', function (e) {
-            if (!toggle.contains(e.target) && !dropdown.contains(e.target)) {
-                dropdown.style.display = 'none';
-            }
-        });
+    function showDropdown() {
+        dropdown.style.display = 'block';
+        setTimeout(() => {
+            dropdown.style.opacity = '1';
+        }, 10);
+        visible = true;
     }
+
+    function hideDropdown() {
+        dropdown.style.opacity = '0';
+        setTimeout(() => {
+            dropdown.style.display = 'none';
+        }, 200);
+        visible = false;
+    }
+
+    toggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        visible ? hideDropdown() : showDropdown();
+    });
+
+    document.addEventListener('click', function (e) {
+        if (!dropdown.contains(e.target) && !toggle.contains(e.target)) {
+            if (visible) hideDropdown();
+        }
+    });
 });
