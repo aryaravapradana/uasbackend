@@ -76,8 +76,8 @@ class ProductSeeder extends Seeder
         ];
         foreach ($hpProducts as [$name, $price, $stock, $desc]) {
             $slug = Str::slug($name);
-            $ext  = file_exists(public_path("images/hp/{$slug}.jpg")) ? 'jpg' : 'jpeg';
-            $img  = "/images/hp/{$slug}.{$ext}";
+            $ext  = file_exists(public_path("images/elektronik/hp/{$slug}.jpg")) ? 'jpg' : 'jpeg';
+            $img  = "/images/elektronik/hp/{$slug}.{$ext}";
 
             Product::create([
                 'name'           => $name,
@@ -104,8 +104,8 @@ class ProductSeeder extends Seeder
         ];
         foreach ($laptopProducts as [$name, $price, $stock, $desc]) {
             $slug = Str::slug($name);
-            $ext  = file_exists(public_path("images/laptop/{$slug}.jpg")) ? 'jpg' : 'jpeg';
-            $img  = "/images/laptop/{$slug}.{$ext}";
+            $ext  = file_exists(public_path("images/elektronik/laptop/{$slug}.jpg")) ? 'jpg' : 'jpeg';
+            $img  = "/images/elektronik/laptop/{$slug}.{$ext}";
 
             Product::create([
                 'name'           => $name,
@@ -132,8 +132,8 @@ class ProductSeeder extends Seeder
         ];
         foreach ($printerProducts as [$name, $price, $stock, $desc]) {
             $slug = Str::slug($name);
-            $ext  = file_exists(public_path("images/printer/{$slug}.jpg")) ? 'jpg' : 'jpeg';
-            $img  = "/images/printer/{$slug}.{$ext}";
+            $ext  = file_exists(public_path("images/elektronik/printer/{$slug}.jpg")) ? 'jpg' : 'jpeg';
+            $img  = "/images/elektronik/printer/{$slug}.{$ext}";
 
             Product::create([
                 'name'           => $name,
@@ -160,8 +160,8 @@ class ProductSeeder extends Seeder
         ];
         foreach ($tvProducts as [$name, $price, $stock, $desc]) {
             $slug = Str::slug($name);
-            $ext  = file_exists(public_path("images/tv/{$slug}.jpg")) ? 'jpg' : 'jpeg';
-            $img  = "/images/tv/{$slug}.{$ext}";
+            $ext  = file_exists(public_path("images/elektronik/tv/{$slug}.jpg")) ? 'jpg' : 'jpeg';
+            $img  = "/images/elektronik/tv/{$slug}.{$ext}";
 
             Product::create([
                 'name'           => $name,
@@ -187,8 +187,8 @@ class ProductSeeder extends Seeder
         ];
         foreach ($kulkasProducts as [$name, $price, $stock, $desc]) {
             $slug = Str::slug($name);
-            $ext  = file_exists(public_path("images/kulkas/{$slug}.jpg")) ? 'jpg' : 'jpeg';
-            $img  = "/images/kulkas/{$slug}.{$ext}";
+            $ext  = file_exists(public_path("images/elektronik/kulkas/{$slug}.jpg")) ? 'jpg' : 'jpeg';
+            $img  = "/images/elektronik/kulkas/{$slug}.{$ext}";
 
             Product::create([
                 'name'           => $name,
@@ -214,8 +214,8 @@ class ProductSeeder extends Seeder
         ];
         foreach ($acProducts as [$name, $price, $stock, $desc]) {
             $slug = Str::slug($name);
-            $ext  = file_exists(public_path("images/ac/{$slug}.jpg")) ? 'jpg' : 'jpeg';
-            $img  = "/images/ac/{$slug}.{$ext}";
+            $ext  = file_exists(public_path("images/elektronik/ac/{$slug}.jpg")) ? 'jpg' : 'jpeg';
+            $img  = "/images/elektronik/ac/{$slug}.{$ext}";
 
             Product::create([
                 'name'           => $name,
@@ -241,8 +241,8 @@ class ProductSeeder extends Seeder
         ];
         foreach ($mesinCuciProducts as [$name, $price, $stock, $desc]) {
             $slug = Str::slug($name);
-           $ext = file_exists(public_path("images/mesin_cuci/{$slug}.jpg")) ? 'jpg' : 'jpeg';
-           $img = "/images/mesin_cuci/{$slug}.{$ext}";
+            $ext  = file_exists(public_path("images/elektronik/mesin-cuci/{$slug}.jpg")) ? 'jpg' : 'jpeg';
+            $img  = "/images/elektronik/mesin-cuci/{$slug}.{$ext}";
 
 
             Product::create([
@@ -269,8 +269,8 @@ class ProductSeeder extends Seeder
         ];
         foreach ($kameraProducts as [$name, $price, $stock, $desc]) {
             $slug = Str::slug($name);
-            $ext  = file_exists(public_path("images/kamera/{$slug}.jpg")) ? 'jpg' : 'jpeg';
-            $img  = "/images/kamera/{$slug}.{$ext}";
+            $ext  = file_exists(public_path("images/elektronik/kamera/{$slug}.jpg")) ? 'jpg' : 'jpeg';
+            $img  = "/images/elektronik/kamera/{$slug}.{$ext}";
 
             Product::create([
                 'name'           => $name,
@@ -296,8 +296,8 @@ class ProductSeeder extends Seeder
         ];
         foreach ($speakerProducts as [$name, $price, $stock, $desc]) {
             $slug = Str::slug($name);
-            $ext  = file_exists(public_path("images/speaker/{$slug}.jpg")) ? 'jpg' : 'jpeg';
-            $img  = "/images/speaker/{$slug}.{$ext}";
+            $ext  = file_exists(public_path("images/elektronik/speaker/{$slug}.jpg")) ? 'jpg' : 'jpeg';
+            $img  = "/images/elektronik/speaker/{$slug}.{$ext}";
 
             Product::create([
                 'name'           => $name,
@@ -323,8 +323,8 @@ class ProductSeeder extends Seeder
         ];
         foreach ($smartwatchProducts as [$name, $price, $stock, $desc]) {
             $slug = Str::slug($name);
-            $ext  = file_exists(public_path("images/smartwatch/{$slug}.jpg")) ? 'jpg' : 'jpeg';
-            $img  = "/images/smartwatch/{$slug}.{$ext}";
+            $ext  = file_exists(public_path("images/elektronik/smartwatch/{$slug}.jpg")) ? 'jpg' : 'jpeg';
+            $img  = "/images/elektronik/smartwatch/{$slug}.{$ext}";
 
             Product::create([
                 'name'           => $name,
