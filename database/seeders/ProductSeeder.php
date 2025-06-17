@@ -22,6 +22,24 @@ class ProductSeeder extends Seeder
         $kamera     = SubCategory::where('slug', 'kamera')->first();
         $speaker    = SubCategory::where('slug', 'speaker')->first();
         $smartwatch = SubCategory::where('slug', 'smartwatch')->first();
+        $kompor     = SubCategory::where('slug', 'kompor')->first();
+        $dispenser  = SubCategory::where('slug', 'dispenser')->first();
+        $meja       = SubCategory::where('slug', 'meja')->first();
+        $kursi      = SubCategory::where('slug', 'kursi')->first();
+        $lemari     = SubCategory::where('slug', 'lemari')->first();
+        $lampu      = SubCategory::where('slug', 'lampu')->first();
+        $kipas      = SubCategory::where('slug', 'kipas')->first();
+        $kasur      = SubCategory::where('slug', 'kasur')->first();
+        $baju       = SubCategory::where('slug', 'baju')->first();
+        $celana     = SubCategory::where('slug', 'celana')->first();
+        $sepatu     = SubCategory::where('slug', 'sepatu')->first();
+        $jaket      = SubCategory::where('slug', 'jaket')->first();
+        $topi       = SubCategory::where('slug', 'topi')->first();
+        $sandal     = SubCategory::where('slug', 'sandal')->first();
+        $kemeja     = SubCategory::where('slug', 'kemeja')->first();
+        $dress      = SubCategory::where('slug', 'dress')->first();
+        $kaos       = SubCategory::where('slug', 'kaos')->first();
+        $aksesoris  = SubCategory::where('slug', 'aksesoris')->first();
 
         // === HP ===
         $hpProducts = [
@@ -297,6 +315,425 @@ class ProductSeeder extends Seeder
                 'description'    => $desc,
             ]);
         }
+        // === Kompor ===
+        if ($kompor) {
+            $products = [
+                ['Rinnai Kompor Gas 2 Tungku RI-522C', 350000, 40, 'Kompor gas dua tungku dengan api ekonomis dan body stainless steel.'],
+                ['Miyako Kompor Gas 1 Tungku KG-101C', 150000, 50, 'Kompor gas portabel, cocok untuk anak kost atau traveling.'],
+                ['Cosmos Kompor Gas Portable CGC-121 P', 250000, 35, 'Kompor portable dengan koper, mudah dibawa dan aman digunakan.'],
+                ['Winn Gas Kompor Kaca 2 Tungku', 600000, 25, 'Kompor tanam dengan desain kaca mewah dan mudah dibersihkan.'],
+                ['Quantum Kompor Gas 1 Tungku QGC-101R', 180000, 45, 'Kompor gas dengan efisiensi tinggi dan pemantik otomatis.'],
+                ['Hock Kompor Minyak Tanah Mutiara 10 Sumbu', 220000, 30, 'Kompor minyak tanah klasik yang awet dan tahan lama.'],
+                ['Progas Kompor Portabel 2 in 1', 210000, 28, 'Bisa menggunakan gas kaleng maupun tabung LPG 3kg.'],
+                ['Sanken Kompor Gas 2 Tungku SG-369DX2', 550000, 22, 'Kompor dengan Blue Whirljet Flame untuk masakan cepat matang.'],
+                ['Idealife Kompor Induksi Listrik IL-201', 450000, 18, 'Kompor listrik induksi hemat daya dengan panel digital.'],
+                ['Oxone Kompor Listrik Single Stove OX-655D', 300000, 33, 'Kompor listrik satu tungku yang praktis dan minimalis.'],
+            ];
+            foreach ($products as [$name, $price, $stock, $desc]) { $slug = Str::slug($name); $ext = file_exists(public_path("images/kompor/{$slug}.jpg")) ? 'jpg' : 'jpeg'; $img = "/images/kompor/{$slug}.{$ext}"; Product::create(['name' => $name, 'price' => $price, 'stock' => $stock, 'subcategory_id' => $kompor->id, 'image_url' => $img, 'description' => $desc]); }
+        }
+
+        // === Meja ===
+        if ($meja) {
+            $products = [
+                ['Informa Meja Kerja Minimalis', 1200000, 20, 'Meja kerja dengan desain modern dan laci penyimpanan.'],
+                ['IKEA LINNMON / ADILS Meja Tulis', 499000, 60, 'Meja tulis simpel dan fungsional dari IKEA.'],
+                ['Zyo Meja Makan Kayu 4 Kursi', 2500000, 15, 'Set meja makan untuk keluarga kecil.'],
+                ['Olympic Meja Belajar Anak', 750000, 30, 'Meja belajar dengan karakter dan rak buku.'],
+                ['Pira Meja Komputer Gaming', 1500000, 22, 'Meja gaming dengan manajemen kabel dan permukaan luas.'],
+                ['Napolly Meja Teras Plastik', 150000, 50, 'Meja plastik untuk teras atau taman, tahan cuaca.'],
+                ['Activ Furniture Meja Rias', 890000, 18, 'Meja rias dengan cermin dan laci penyimpanan kosmetik.'],
+                ['Graver Meja TV Minimalis', 650000, 28, 'Rak TV dengan desain modern untuk ruang keluarga.'],
+                ['Livien Meja Kopi Scandinavian', 550000, 25, 'Meja tamu dengan gaya scandinavian yang estetik.'],
+                ['Pro Design Meja Sudut', 400000, 35, 'Meja kecil untuk diletakkan di sudut ruangan.'],
+            ];
+            foreach ($products as [$name, $price, $stock, $desc]) { $slug = Str::slug($name); $ext = file_exists(public_path("images/meja/{$slug}.jpg")) ? 'jpg' : 'jpeg'; $img = "/images/meja/{$slug}.{$ext}"; Product::create(['name' => $name, 'price' => $price, 'stock' => $stock, 'subcategory_id' => $meja->id, 'image_url' => $img, 'description' => $desc]); }
+        }
+
+        // === Kursi ===
+        if ($kursi) {
+            $products = [
+                ['Informa Kursi Kantor Ergonomis', 950000, 30, 'Kursi kerja dengan sandaran punggung yang nyaman.'],
+                ['Napolly Kursi Plastik Santai 209', 50000, 100, 'Kursi plastik tahan lama untuk berbagai keperluan.'],
+                ['Pira Kursi Gaming Profesional', 1800000, 18, 'Kursi gaming dengan bantalan dan sandaran tangan adjustable.'],
+                ['IKEA POÄNG Kursi Santai', 1295000, 20, 'Kursi santai ikonik dengan rangka kayu lentur.'],
+                ['Chitose Kursi Lipat', 250000, 50, 'Kursi lipat praktis untuk acara atau ruang terbatas.'],
+                ['Olymplast Kursi Bakso Plastik', 35000, 150, 'Kursi bakso standar yang kuat dan ekonomis.'],
+                ['Ace Hardware Kursi Teras Besi', 450000, 25, 'Satu set kursi teras dari besi tempa yang kokoh.'],
+                ['Livien Kursi Makan Scandinavian', 400000, 40, 'Kursi makan kayu dengan desain minimalis.'],
+                ['Stool Bar / Kursi Bar', 350000, 30, 'Kursi tinggi untuk meja bar atau pantry.'],
+                ['Bean Bag Cover Only', 200000, 60, 'Sarung bean bag berbagai warna dan bahan.'],
+            ];
+            foreach ($products as [$name, $price, $stock, $desc]) { $slug = Str::slug($name); $ext = file_exists(public_path("images/kursi/{$slug}.jpg")) ? 'jpg' : 'jpeg'; $img = "/images/kursi/{$slug}.{$ext}"; Product::create(['name' => $name, 'price' => $price, 'stock' => $stock, 'subcategory_id' => $kursi->id, 'image_url' => $img, 'description' => $desc]); }
+        }
+
+        // === Lemari ===
+        if ($lemari) {
+            $products = [
+                ['Olympic Lemari Pakaian 2 Pintu', 1500000, 20, 'Lemari baju dengan cermin dan kunci.'],
+                ['Napolly Lemari Plastik 4 Susun', 450000, 40, 'Lemari plastik serbaguna dengan karakter.'],
+                ['Pira Lemari Pakaian Sliding', 2800000, 15, 'Lemari pakaian pintu geser, hemat tempat.'],
+                ['IKEA BRIMNES Lemari 3 Pintu', 3500000, 12, 'Lemari modern dengan banyak ruang penyimpanan.'],
+                ['Activ Furniture Rak Buku 5 Susun', 600000, 30, 'Rak buku kayu partikel dengan desain minimalis.'],
+                ['Kéa Panel Lemari Dapur Atas', 800000, 25, 'Kabinet gantung untuk dapur.'],
+                ['Rak Piring Stainless 3 Susun', 250000, 50, 'Rak pengering piring anti karat.'],
+                ['Locker Besi 9 Pintu', 2200000, 10, 'Loker penyimpanan dari besi untuk kantor atau gym.'],
+                ['Sun-Life Lemari Rotan Sintetis', 550000, 28, 'Lemari laci plastik dengan motif anyaman rotan.'],
+                ['Olymplast Lemari Gantung Plastik', 750000, 22, 'Lemari plastik dengan area gantungan baju.'],
+            ];
+            foreach ($products as [$name, $price, $stock, $desc]) { $slug = Str::slug($name); $ext = file_exists(public_path("images/lemari/{$slug}.jpg")) ? 'jpg' : 'jpeg'; $img = "/images/lemari/{$slug}.{$ext}"; Product::create(['name' => $name, 'price' => $price, 'stock' => $stock, 'subcategory_id' => $lemari->id, 'image_url' => $img, 'description' => $desc]); }
+        }
+        
+        // === Lampu ===
+        if ($lampu) {
+            $products = [
+                ['Philips Lampu LED Bohlam 12W', 35000, 200, 'Bohlam LED hemat energi, cahaya putih terang.'],
+                ['Hannochs Lampu Emergency LED', 150000, 80, 'Lampu darurat yang menyala otomatis saat listrik padam.'],
+                ['IKEA TERTIAL Lampu Kerja', 299000, 50, 'Lampu meja arsitek yang fleksibel dan ikonik.'],
+                ['Lampu Gantung Hias Kristal', 800000, 15, 'Lampu gantung mewah untuk ruang tamu.'],
+                ['Lampu Sorot LED Outdoor 50W', 120000, 60, 'Lampu tembak tahan air untuk taman atau papan nama.'],
+                ['Lampu Tumblr / Hias Natal 10 Meter', 25000, 150, 'Lampu hias kelap-kelip berbagai warna.'],
+                ['Downlight LED Panel 18W', 55000, 100, 'Lampu plafon tanam (inbow) untuk interior modern.'],
+                ['Lampu Dinding Minimalis Outdoor', 180000, 40, 'Lampu tempel dinding untuk teras.'],
+                ['Osram Lampu LED Mobil H4', 250000, 30, 'Bohlam lampu utama mobil dengan cahaya lebih terang.'],
+                ['Lampu Belajar Jepit', 75000, 70, 'Lampu baca yang bisa dijepit di meja atau kepala tempat tidur.'],
+            ];
+            foreach ($products as [$name, $price, $stock, $desc]) { $slug = Str::slug($name); $ext = file_exists(public_path("images/lampu/{$slug}.jpg")) ? 'jpg' : 'jpeg'; $img = "/images/lampu/{$slug}.{$ext}"; Product::create(['name' => $name, 'price' => $price, 'stock' => $stock, 'subcategory_id' => $lampu->id, 'image_url' => $img, 'description' => $desc]); }
+        }
+
+        // === Kipas Angin ===
+        if ($kipas) {
+            $products = [
+                ['Miyako Kipas Angin Berdiri 16 inci', 250000, 50, 'Kipas angin berdiri dengan 3 pilihan kecepatan.'],
+                ['Cosmos Kipas Angin Dinding 16 inci', 280000, 40, 'Kipas angin tempel dinding dengan tali tarikan.'],
+                ['Maspion Kipas Angin Meja 8 inci', 150000, 60, 'Kipas angin kecil untuk diletakkan di atas meja.'],
+                ['Sekai Kipas Angin Box Fan 12 inci', 220000, 35, 'Kipas angin kotak yang bisa diletakkan di lantai atau meja.'],
+                ['Panasonic Kipas Angin Plafon', 900000, 20, 'Kipas angin gantung di plafon dengan baling-baling besi.'],
+                ['Regency Kipas Angin Tornado', 550000, 25, 'Kipas angin lantai dengan hembusan angin kencang.'],
+                ['Kirin Kipas Angin 3 in 1', 350000, 30, 'Bisa menjadi kipas berdiri, meja, dan dinding.'],
+                ['Advance Kipas Angin Portable USB', 80000, 80, 'Kipas angin mini dengan baterai isi ulang via USB.'],
+                ['Krisbow Kipas Angin Industri', 1200000, 15, 'Kipas angin besar untuk gudang atau area industri.'],
+                ['Sharp Kipas Angin Air Cooler', 1500000, 18, 'Pendingin udara dengan teknologi water tank.'],
+            ];
+            foreach ($products as [$name, $price, $stock, $desc]) { $slug = Str::slug($name); $ext = file_exists(public_path("images/kipas/{$slug}.jpg")) ? 'jpg' : 'jpeg'; $img = "/images/kipas/{$slug}.{$ext}"; Product::create(['name' => $name, 'price' => $price, 'stock' => $stock, 'subcategory_id' => $kipas->id, 'image_url' => $img, 'description' => $desc]); }
+        }
+
+        // === Kasur ===
+        if ($kasur) {
+            $products = [
+                ['Inoac Kasur Busa No. 2 (160x200)', 1200000, 20, 'Kasur busa kepadatan tinggi dengan garansi anti kempes.'],
+                ['Royal Foam Kasur Busa Single (90x200)', 700000, 30, 'Kasur busa ekonomis untuk satu orang.'],
+                ['Central Spring Bed Deluxe 160x200', 2500000, 15, 'Set spring bed lengkap dengan divan dan sandaran.'],
+                ['Elite Spring Bed Serenity 180x200', 3200000, 12, 'Spring bed dengan teknologi pegas dan lapisan nyaman.'],
+                ['Bigland Kasur Spring Bed 2in1', 2800000, 18, 'Kasur sorong 2in1 cocok untuk kamar anak.'],
+                ['Kasur Lipat Busa', 300000, 50, 'Kasur busa praktis yang bisa dilipat untuk disimpan.'],
+                ['Guhdo Spring Bed New Prima 120x200', 1800000, 25, 'Spring bed dengan harga terjangkau dan kualitas baik.'],
+                ['Uniland Kasur Busa Paradise', 900000, 28, 'Kasur busa dengan kain knitting yang lembut.'],
+                ['Airland Spring Bed 101', 4500000, 10, 'Spring bed premium dengan 5 zona penyangga tubuh.'],
+                ['Comforta Spring Bed Super Fit', 2200000, 22, 'Kasur spring bed dengan lapisan couple comfort.'],
+            ];
+            foreach ($products as [$name, $price, $stock, $desc]) { $slug = Str::slug($name); $ext = file_exists(public_path("images/kasur/{$slug}.jpg")) ? 'jpg' : 'jpeg'; $img = "/images/kasur/{$slug}.{$ext}"; Product::create(['name' => $name, 'price' => $price, 'stock' => $stock, 'subcategory_id' => $kasur->id, 'image_url' => $img, 'description' => $desc]); }
+        }
+
+        // === Baju ===
+        if ($baju) {
+            $bajuProducts = [
+                ['Baju Cewek Cina Nuansa Merah', 185000, 45, 'Atasan wanita elegan dengan sentuhan tradisional Cina berwarna merah cerah.'],
+                ['Baju Cewek Mini Kotak Kotak Pink', 95000, 70, 'Dress mini kasual motif kotak-kotak pink, cocok untuk gaya muda.'],
+                ['Baju Cewek Pakaian Adat', 450000, 15, 'Set pakaian adat untuk wanita.'],
+                ['Baju Cewek Stylish Berkerah Abu Abu', 130000, 60, 'Kemeja wanita berkerah warna abu-abu, cocok untuk tampilan formal maupun semi-formal.'],
+                ['Baju Cowok Cina Nuansa Merah', 210000, 35, 'Kemeja pria bergaya Cina dengan detail klasik dan warna merah menyala.'],
+                ['Baju Cowok Pakaian Adat', 550000, 10, 'Set pakaian adat untuk pria.'],
+                ['Baju Cowok Stylish Modern', 160000, 55, 'Atasan pria stylish dengan tampilan modern.'],
+                ['Sweatshirt Biru Muda', 175000, 80, 'Sweatshirt warna biru muda.'],
+                ['Sweatshirt Coklat', 165000, 90, 'Sweatshirt warna coklat.'],
+                ['Sweatshirt Merah', 180000, 75, 'Sweatshirt warna merah.'],
+            ];
+            foreach ($bajuProducts as [$name, $price, $stock, $desc]) {
+                $slug = Str::slug($name);
+                $ext  = file_exists(public_path("images/baju/{$slug}.jpg")) ? 'jpg' : 'jpeg';
+                $img  = "/images/baju/{$slug}.{$ext}";
+
+                Product::create([
+                    'name'           => $name,
+                    'price'          => $price,
+                    'stock'          => $stock,
+                    'subcategory_id' => $baju->id,
+                    'image_url'      => $img,
+                    'description'    => $desc,
+                ]);
+            }
+        }
+
+        // === Celana ===
+        if ($celana) {
+            $celanaProducts = [
+                ['Celana Pendek Biru Terang', 85000, 70, 'Celana pendek pria warna biru terang, ringan dan nyaman untuk santai.'],
+                ['Celana Pendek Jeans Modern', 120000, 55, 'Celana pendek jeans dengan desain modern, cocok untuk gaya kasual.'],
+                ['Celana Pendek Kuning', 75000, 85, 'Celana pendek cerah warna kuning, ideal untuk musim panas.'],
+                ['Celana Pendek Merah', 80000, 65, 'Celana pendek pria warna merah, cocok untuk aktivitas sporty.'],
+                ['Jeans Abu Abu', 190000, 40, 'Celana jeans panjang warna abu-abu, serbaguna untuk berbagai gaya.'],
+                ['Jeans Biru Tua', 210000, 50, 'Celana jeans klasik warna biru tua, tahan lama dan nyaman.'],
+                ['Jeans Hijau', 200000, 30, 'Celana jeans unik warna hijau, menambah sentuhan warna pada penampilan.'],
+                ['Jeans Hitam', 220000, 60, 'Celana jeans hitam basic, esensial untuk setiap lemari pakaian.'],
+                ['Jeans Kuning', 195000, 25, 'Celana jeans cerah warna kuning, pernyataan gaya yang berani.'],
+                ['Jeans Merah', 205000, 28, 'Celana jeans warna merah yang mencolok, cocok untuk tampilan edgy.'],
+            ];
+            foreach ($celanaProducts as [$name, $price, $stock, $desc]) {
+                $slug = Str::slug($name);
+                $ext  = file_exists(public_path("images/celana/{$slug}.jpg")) ? 'jpg' : 'jpeg';
+                $img  = "/images/celana/{$slug}.{$ext}";
+
+                Product::create([
+                    'name'           => $name,
+                    'price'          => $price,
+                    'stock'          => $stock,
+                    'subcategory_id' => $celana->id,
+                    'image_url'      => $img,
+                    'description'    => $desc,
+                ]);
+            }
+        }           
+
+        // === Sepatu ===
+        if ($sepatu) {
+            $sepatuProducts = [
+                ['Heels Hitam', 250000, 30, 'Sepatu heels klasik warna hitam, cocok untuk acara formal.'],
+                ['Heels Hitam Bertali', 280000, 25, 'Sepatu heels hitam dengan detail tali, memberikan kesan elegan.'],
+                ['Heels Putih', 270000, 28, 'Sepatu heels warna putih bersih, ideal untuk tampilan feminin.'],
+                ['Sepatu Biru', 350000, 40, 'Sepatu olahraga warna biru, ringan dan nyaman untuk aktivitas sehari-hari.'],
+                ['Sepatu Coklat', 220000, 50, 'Sepatu kasual warna coklat, cocok untuk gaya santai.'],
+                ['Sepatu Hijau', 190000, 35, 'Sepatu sneakers warna hijau, memberikan sentuhan warna yang menarik.'],
+                ['Sepatu Hitam', 210000, 60, 'Sepatu sneakers hitam, serbaguna dan mudah dipadukan dengan berbagai outfit.'],
+                ['Sepatu Kuning', 230000, 45, 'Sepatu sneakers cerah warna kuning, tampil beda dan stylish.'],
+                ['Sepatu Merah', 200000, 55, 'Sepatu sneakers merah, cocok untuk gaya yang berani dan energik.'],
+                ['Sepatu Pink', 180000, 65, 'Sepatu olahraga warna pink, ringan dan modis untuk wanita.'],
+                ['Sepatu Putih', 240000, 70, 'Sepatu sneakers putih klasik, wajib punya untuk setiap gaya.'],
+            ];
+            foreach ($sepatuProducts as [$name, $price, $stock, $desc]) {
+                $slug = Str::slug($name);
+                $ext  = file_exists(public_path("images/sepatu/{$slug}.jpg")) ? 'jpg' : 'jpeg';
+                $img  = "/images/sepatu/{$slug}.{$ext}";
+
+                Product::create([
+                    'name'           => $name,
+                    'price'          => $price,
+                    'stock'          => $stock,
+                    'subcategory_id' => $sepatu->id,
+                    'image_url'      => $img,
+                    'description'    => $desc,
+                ]);
+            }
+        }
+        // === Jaket ===
+        if ($jaket) {
+            $jaketProducts = [
+                ['Hoodie Biru', 190000, 50, 'Hoodie nyaman berwarna biru, cocok untuk gaya santai sehari-hari.'],
+                ['Hoodie Coklat', 185000, 55, 'Hoodie hangat berwarna coklat, ideal untuk cuaca dingin.'],
+                ['Hoodie Galaxy', 220000, 30, 'Hoodie dengan motif galaksi unik, tampilan yang menarik dan berbeda.'],
+                ['Hoodie Hijau', 195000, 48, 'Hoodie kasual berwarna hijau, memberikan kesan segar dan alami.'],
+                ['Hoodie Hitam', 200000, 60, 'Hoodie klasik berwarna hitam, serbaguna dan mudah dipadukan.'],
+                ['Hoodie Merah', 198000, 40, 'Hoodie cerah berwarna merah, tampil berani dan energik.'],
+                ['Hoodie Pink', 180000, 52, 'Hoodie lembut berwarna pink, cocok untuk gaya feminin yang nyaman.'],
+                ['Hoodie Putih', 192000, 58, 'Hoodie bersih berwarna putih, tampilan minimalis dan stylish.'],
+                ['Jaket Motor', 350000, 25, 'Jaket motor yang kuat dan stylish, memberikan perlindungan saat berkendara.'],
+                ['Jaket Stylish Modern', 380000, 20, 'Jaket dengan desain modern dan stylish, cocok untuk berbagai acara.'],
+            ];
+            foreach ($jaketProducts as [$name, $price, $stock, $desc]) {
+                $slug = Str::slug($name);
+                $ext  = file_exists(public_path("images/jaket/{$slug}.jpg")) ? 'jpg' : 'jpeg';
+                $img  = "/images/jaket/{$slug}.{$ext}";
+
+                Product::create([
+                    'name'           => $name,
+                    'price'          => $price,
+                    'stock'          => $stock,
+                    'subcategory_id' => $jaket->id,
+                    'image_url'      => $img,
+                    'description'    => $desc,
+                ]);
+            }
+        }
+
+        // === Topi ===
+        if ($topi) {
+            $topiProducts = [
+                ['Topi Bertali Hitam', 75000, 70, 'Topi hitam dengan tali pengikat, cocok untuk kegiatan outdoor.'],
+                ['Topi Bulat Coklat', 65000, 80, 'Topi bulat berwarna coklat, gaya kasual dan nyaman.'],
+                ['Topi Casual Hitam', 80000, 90, 'Topi kasual hitam, desain sederhana dan cocok untuk sehari-hari.'],
+                ['Topi Cow Boy', 120000, 30, 'Topi cow-boy klasik, memberikan kesan petualang yang unik.'],
+                ['Topi Detective', 95000, 40, 'Topi gaya detektif, sentuhan misterius dan klasik.'],
+                ['Topi Komando', 70000, 60, 'Topi komando, desain tangguh dan fungsional.'],
+                ['Topi Matahari Biru Terang', 55000, 100, 'Topi matahari warna biru terang, melindungi dari sinar matahari dengan gaya.'],
+                ['Topi Pramuka', 45000, 120, 'Topi pramuka, identitas resmi dan cocok untuk kegiatan kepramukaan.'],
+                ['Topi Sd', 35000, 150, 'Topi seragam sekolah dasar, nyaman untuk anak-anak.'],
+                ['Topi Stylish Hitam', 85000, 75, 'Topi stylish berwarna hitam, menambah kesan modern pada penampilan.'],
+            ];
+            foreach ($topiProducts as [$name, $price, $stock, $desc]) {
+                $slug = Str::slug($name);
+                $ext  = file_exists(public_path("images/topi/{$slug}.jpg")) ? 'jpg' : 'jpeg';
+                $img  = "/images/topi/{$slug}.{$ext}";
+
+                Product::create([
+                    'name'           => $name,
+                    'price'          => $price,
+                    'stock'          => $stock,
+                    'subcategory_id' => $topi->id,
+                    'image_url'      => $img,
+                    'description'    => $desc,
+                ]);
+            }
+        }   
+
+            // === Sandal ===
+        if ($sandal) {
+            $sandalProducts = [
+                ['Sandal Camper', 180000, 40, 'Sandal camper pria/wanita, nyaman untuk kegiatan outdoor dan kasual.'],
+                ['Sandal Jepit Bercorak', 45000, 90, 'Sandal jepit dengan motif bercorak, ringan dan cocok untuk santai.'],
+                ['Sandal Jepit Hijau', 35000, 120, 'Sandal jepit polos warna hijau, basic dan fungsional.'],
+                ['Sandal Jepit Pink', 38000, 110, 'Sandal jepit warna pink cerah, cocok untuk tampilan yang playful.'],
+                ['Sandal Jepit Putih Biru', 40000, 100, 'Sandal jepit kombinasi warna putih dan biru, desain klasik dan nyaman.'],
+                ['Sandal Nike', 250000, 30, 'Sandal slide Nike, sporty dan nyaman untuk setelah berolahraga atau santai.'],
+                ['Sandal Stylish Bunga', 150000, 50, 'Sandal stylish dengan detail bunga, memberikan sentuhan feminin dan elegan.'],
+                ['Sandal Track Eagle', 190000, 35, 'Sandal track dengan desain tangguh, ideal untuk petualangan dan kegiatan outdoor.'],
+                ['Sandal Wanita Kondangan', 220000, 25, 'Sandal wanita elegan, cocok untuk acara formal atau kondangan.'],
+                ['Slipper Hitam', 60000, 80, 'Slipper hitam yang nyaman, ideal untuk penggunaan di dalam rumah.'],
+            ];
+            foreach ($sandalProducts as [$name, $price, $stock, $desc]) {
+                $slug = Str::slug($name);
+                $ext  = file_exists(public_path("images/sandal/{$slug}.jpg")) ? 'jpg' : 'jpeg';
+                $img  = "/images/sandal/{$slug}.{$ext}";
+
+                Product::create([
+                    'name'           => $name,
+                    'price'          => $price,
+                    'stock'          => $stock,
+                    'subcategory_id' => $sandal->id,
+                    'image_url'      => $img,
+                    'description'    => $desc,
+                ]);
+            }
+        }
+
+        // === Kemeja ===
+        if ($kemeja) {
+            $kemejaProducts = [
+                ['Kemeja Aqua', 150000, 60, 'Kemeja lengan panjang warna aqua yang menenangkan, cocok untuk tampilan kasual.'],
+                ['Kemeja Batik', 180000, 45, 'Kemeja batik modern dengan motif tradisional, ideal untuk acara formal dan semi-formal.'],
+                ['Kemeja Biru', 120000, 70, 'Kemeja lengan pendek warna biru cerah, nyaman untuk aktivitas sehari-hari.'],
+                ['Kemeja Cewek Putih', 140000, 55, 'Kemeja putih basic untuk wanita, serbaguna dan elegan.'],
+                ['Kemeja Checker Hitam Putih', 160000, 50, 'Kemeja motif checkerboard hitam putih, gaya klasik yang tak lekang oleh waktu.'],
+                ['Kemeja Hitam', 135000, 65, 'Kemeja hitam polos, esensial untuk berbagai gaya dan kesempatan.'],
+                ['Kemeja Kotak Abu Abu', 155000, 48, 'Kemeja motif kotak-kotak abu-abu, tampilan santai namun tetap rapi.'],
+                ['Kemeja Pendek Putih', 110000, 75, 'Kemeja lengan pendek putih, ringan dan cocok untuk iklim tropis.'],
+                ['Kemeja Putih', 145000, 80, 'Kemeja putih lengan panjang klasik, pilihan serbaguna untuk formal atau kasual.'],
+                ['Kemeja Stylish Biru Muda', 170000, 40, 'Kemeja biru muda dengan desain stylish, tampilan modern dan segar.'],
+            ];
+            foreach ($kemejaProducts as [$name, $price, $stock, $desc]) {
+                $slug = Str::slug($name);
+                $ext  = file_exists(public_path("images/kemeja/{$slug}.jpg")) ? 'jpg' : 'jpeg';
+                $img  = "/images/kemeja/{$slug}.{$ext}";
+
+                Product::create([
+                    'name'           => $name,
+                    'price'          => $price,
+                    'stock'          => $stock,
+                    'subcategory_id' => $kemeja->id,
+                    'image_url'      => $img,
+                    'description'    => $desc,
+                ]);
+            }
+        }
+
+        // === Dress ===
+        if ($dress) {
+            $dressProducts = [
+                ['Dress Bercorak Bunga', 280000, 35, 'Dress wanita dengan motif bunga yang cerah, cocok untuk tampilan feminin dan segar.'],
+                ['Dress Bercorak Hitam Putih', 260000, 40, 'Dress bercorak hitam putih, gaya klasik dan modern untuk berbagai kesempatan.'],
+                ['Dress Biru', 310000, 30, 'Dress elegan berwarna biru, ideal untuk pesta atau acara semi-formal.'],
+                ['Dress Cina', 380000, 20, 'Dress tradisional Cina dengan sentuhan modern, unik dan berkelas.'],
+                ['Dress Hijau', 300000, 28, 'Dress kasual berwarna hijau, nyaman dan stylish untuk sehari-hari.'],
+                ['Dress Hitam', 350000, 45, 'Little black dress klasik, wajib ada di lemari pakaian setiap wanita.'],
+                ['Dress Hitam Simple Elegant', 320000, 38, 'Dress hitam dengan desain simple namun tetap elegan, cocok untuk berbagai acara.'],
+                ['Dress Merah', 420000, 22, 'Dress merah yang memukau, tampil berani dan menawan.'],
+                ['Dress Pink', 390000, 27, 'Dress pesta warna pink yang lembut, cocok untuk tampilan romantis.'],
+                ['Dress Putih', 500000, 18, 'Dress putih panjang, sering digunakan sebagai gaun pengantin atau acara spesial lainnya.'],
+            ];
+            foreach ($dressProducts as [$name, $price, $stock, $desc]) {
+                $slug = Str::slug($name);
+                $ext  = file_exists(public_path("images/dress/{$slug}.jpg")) ? 'jpg' : 'jpeg';
+                $img  = "/images/dress/{$slug}.{$ext}";
+
+                Product::create([
+                    'name'           => $name,
+                    'price'          => $price,
+                    'stock'          => $stock,
+                    'subcategory_id' => $dress->id,
+                    'image_url'      => $img,
+                    'description'    => $desc,
+                ]);
+            }
+        }
+
+        // === Kaos ===
+        if ($kaos) {
+            $kaosProducts = [
+                ['Kaos Polo Biru', 95000, 70, 'Kaos polo pria berwarna biru, cocok untuk tampilan kasual yang rapi.'],
+                ['Kaos Polo Hitam', 98000, 75, 'Kaos polo klasik berwarna hitam, serbaguna untuk berbagai acara.'],
+                ['Kaos Polo Putih', 92000, 80, 'Kaos polo putih bersih, memberikan kesan elegan dan minimalis.'],
+                ['T-Shirt Abu Abu', 65000, 100, 'T-shirt polos berwarna abu-abu, nyaman untuk aktivitas sehari-hari.'],
+                ['T-Shirt Biru', 68000, 95, 'T-shirt polos berwarna biru, bahan lembut dan adem.'],
+                ['T-Shirt Hijau', 67000, 90, 'T-shirt polos berwarna hijau, cocok untuk gaya santai dan segar.'],
+                ['T-Shirt Hitam', 70000, 110, 'T-shirt hitam basic, esensial untuk setiap lemari pakaian.'],
+                ['T-Shirt Kuning', 63000, 85, 'T-shirt polos berwarna kuning cerah, tampil beda dan ceria.'],
+                ['T-Shirt Merah', 69000, 92, 'T-shirt polos berwarna merah, memberikan kesan berani dan energik.'],
+                ['T-Shirt Putih', 62000, 120, 'T-shirt putih polos, paling dasar dan mudah dipadukan.'],
+            ];
+            foreach ($kaosProducts as [$name, $price, $stock, $desc]) {
+                $slug = Str::slug($name);
+                $ext  = file_exists(public_path("images/kaos/{$slug}.jpg")) ? 'jpg' : 'jpeg';
+                $img  = "/images/kaos/{$slug}.{$ext}";
+
+                Product::create([
+                    'name'           => $name,
+                    'price'          => $price,
+                    'stock'          => $stock,
+                    'subcategory_id' => $kaos->id,
+                    'image_url'      => $img,
+                    'description'    => $desc,
+                ]);
+            }
+        }
+
+        // === Aksesoris ===
+        if ($aksesoris) {
+            $aksesorisProducts = [
+                ['Cincin Berlian Rose Gold', 7500000, 15, 'Cincin berlian dengan desain rose gold, elegan dan mewah.'],
+                ['Cincin Emas Biasa', 2500000, 30, 'Cincin emas polos, cocok untuk penggunaan sehari-hari.'],
+                ['Gelang Emas Chain', 3200000, 20, 'Gelang rantai emas, desain klasik dan menawan.'],
+                ['Gelang Perak', 800000, 40, 'Gelang perak murni, sederhana namun tetap stylish.'],
+                ['Jam Digital Modern', 450000, 60, 'Jam tangan digital dengan fitur modern dan desain sporty.'],
+                ['Jam Stylish', 1500000, 25, 'Jam tangan stylish dengan desain mewah, cocok untuk pria dan wanita.'],
+                ['Kalung Emas Couple', 5000000, 18, 'Kalung emas desain couple, ideal sebagai hadiah pasangan.'],
+                ['Kalung Emas Berlian', 12000000, 10, 'Kalung emas dengan hiasan berlian, sangat mewah dan berharga.'],
+                ['Mahkota Elegant', 900000, 12, 'Mahkota elegan dengan desain mewah, cocok untuk acara spesial.'],
+                ['Mahkota Stylish Simple', 600000, 20, 'Mahkota stylish dengan desain sederhana, cocok untuk tampilan anggun minimalis.'],
+            ];
+            foreach ($aksesorisProducts as [$name, $price, $stock, $desc]) {
+                $slug = Str::slug($name);
+                $ext  = file_exists(public_path("images/aksesoris/{$slug}.jpg")) ? 'jpg' : 'jpeg';
+                $img  = "/images/aksesoris/{$slug}.{$ext}";
+
+                Product::create([
+                    'name'           => $name,
+                    'price'          => $price,
+                    'stock'          => $stock,
+                    'subcategory_id' => $aksesoris->id,
+                    'image_url'      => $img,
+                    'description'    => $desc,
+                ]);
+            }
+        }
+
         // Informasi selesai seeding
         $this->command->info('Seeding produk selesai! Total produk: ' . Product::count());         
     }

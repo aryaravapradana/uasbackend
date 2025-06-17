@@ -10,6 +10,7 @@ class SubCategorySeeder extends Seeder
 {
     public function run(): void
     {
+        // KATEGORI & SUBKATEGORI ELEKTRONIK
         $elektronik = Category::firstOrCreate(
             ['slug' => 'elektronik'],
             ['name' => 'Elektronik']
@@ -38,6 +39,39 @@ class SubCategorySeeder extends Seeder
             );
         }
 
+        // KATEGORI & SUBKATEGORI RUMAH TANGGA
+        $rumahTangga = Category::firstOrCreate(
+            ['slug' => 'rumah-tangga'],
+            ['name' => 'Rumah Tangga']
+        );
+
+        $rumahSubs = ['Kompor', 'Kulkas', 'Mesin Cuci', 'Dispenser', 'Meja', 'Kursi', 'Lemari', 'Lampu', 'Kipas', 'Kasur'];
+        foreach ($rumahSubs as $sub) {
+            SubCategory::firstOrCreate([
+                'slug' => strtolower(str_replace(' ', '-', $sub))
+            ], [
+                'name' => $sub,
+                'category_id' => $rumahTangga->id
+            ]);
+        }
+        
+        // === KATEGORI & SUBKATEGORI FASHION (Tambahan) ===
+        $fashion = Category::firstOrCreate([
+            'slug' => 'fashion'
+        ], [
+            'name' => 'Fashion'
+        ]);
+
+        $fashionSubs = ['Baju', 'Celana', 'Sepatu', 'Jaket', 'Topi', 'Sandal', 'Kemeja', 'Dress', 'Kaos', 'Aksesoris'];
+        foreach ($fashionSubs as $sub) {
+            SubCategory::firstOrCreate([
+                'slug' => strtolower(str_replace(' ', '-', $sub))
+            ], [
+                'name' => $sub,
+                'category_id' => $fashion->id
+            ]);
+        }
+        
         echo "Subkategori berhasil ditambahkan atau sudah ada sebelumnya.\n";
     }
 }
