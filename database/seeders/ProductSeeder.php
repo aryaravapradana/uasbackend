@@ -12,9 +12,9 @@ class ProductSeeder extends Seeder
     public function run()
     {
         // Ambil masing-masing subkategori
-        $hp      = SubCategory::where('slug', 'hp')->first();
-        $laptop  = SubCategory::where('slug', 'laptop')->first();
-        $printer = SubCategory::where('slug', 'printer')->first();
+        $hp         = SubCategory::where('slug', 'hp')->first();
+        $laptop     = SubCategory::where('slug', 'laptop')->first();
+        $printer    = SubCategory::where('slug', 'printer')->first();
         $tv         = SubCategory::where('slug', 'tv')->first();
         $kulkas     = SubCategory::where('slug', 'kulkas')->first();
         $ac         = SubCategory::where('slug', 'ac')->first();
