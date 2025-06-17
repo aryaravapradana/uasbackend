@@ -15,10 +15,9 @@ return new class extends Migration
         $table->id();
         $table->string('name');
         $table->string('slug')->unique();
-        $table->unsignedBigInteger('parent_id')->nullable(); // FIX: manual define
+        $table->unsignedBigInteger('parent_id')->nullable(); 
         $table->timestamps();
 
-        // Tambah foreign key constraint setelah define parent_id
         $table->foreign('parent_id')
             ->references('id')  
             ->on('categories')  
