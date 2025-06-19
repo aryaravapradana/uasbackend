@@ -23,3 +23,4 @@
     </div>
 </body>
 </html>
+<!-- Ui Failed ini tidak akan kepakai untuk dummy gateway, dikarenakan tidak ada a real way to implement it in our project  -–>
