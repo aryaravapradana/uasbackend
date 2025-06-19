@@ -239,7 +239,6 @@ class ProductSeeder extends Seeder
         }
         // === Mesin Cuci ===
         $mesinCuciProducts = [
-            ['LG Front Load Washing Machine 8.5 Kg', 5999000, 10, 'Mesin cuci front load dengan teknologi 6 Motion Direct Drive.'],
             ['Samsung Top Load Washing Machine 7 Kg', 3999000, 12, 'Mesin cuci top load dengan fitur Diamond Drum.'],
             ['Sharp Semi-Automatic Washing Machine 7 Kg', 2499000, 15, 'Mesin cuci semi-otomatis dengan desain kompak.'],
             ['Panasonic Fully Automatic Washing Machine 9 Kg', 6999000, 8, 'Mesin cuci fully automatic dengan fitur Eco Aquabeat.'],
@@ -374,6 +373,35 @@ class ProductSeeder extends Seeder
             ]);
         }
 
+// === Dispenser ===
+        if ($dispenser) {
+            $products = [
+                ['Miyako Dispenser Panas & Normal WD-190', 200000, 50, 'Dispenser meja dengan 2 fungsi, panas dan normal, desain minimalis.'],
+                ['Sanken Dispenser Galon Bawah HWD-C520IC', 2100000, 20, 'Dispenser galon bawah dengan 3 kran (panas, dingin, normal) dan tangki stainless.'],
+                ['Sharp Dispenser Galon Atas SWD-72EHL', 1500000, 25, 'Dispenser dengan fitur Child Lock dan lampu LED indikator.'],
+                ['Cosmos Dispenser Portable CWD-1138', 180000, 60, 'Dispenser meja portabel, ringan dan mudah dipindah, hemat listrik.'],
+                ['Denpoo Dispenser Galon Bawah DDB-29', 1800000, 18, 'Dispenser low watt dengan pipa Z-pipe stainless steel anti karat.'],
+                ['Arisa Dispenser 3 in 1 BWD-1L', 1300000, 22, 'Dispenser galon bawah dengan fungsi panas, dingin, dan normal.'],
+                ['Yong Ma Magic Clean Dispenser YM2000', 900000, 30, 'Dispenser dengan teknologi magic clean untuk kebersihan air.'],
+                ['Modena Dispenser Galon Bawah DD 7302 L', 2500000, 15, 'Dispenser premium dengan fitur Water Storage Sensor.'],
+                ['Mito Dispenser Galon Bawah MD-666', 1600000, 28, 'Dispenser 3 kran dengan daya listrik rendah dan kunci pengaman anak.'],
+            ];
+            foreach ($products as [$name, $price, $stock, $desc]) {
+                $slug = Str::slug($name);
+                $ext  = file_exists(public_path("images/rumah tangga/dispenser/{$slug}.jpg")) ? 'jpg' : 'jpeg';
+                $img  = "/images/rumah tangga/dispenser/{$slug}.{$ext}";
+
+                Product::create([
+                    'name'           => $name,
+                    'price'          => $price,
+                    'stock'          => $stock,
+                    'subcategory_id' => $dispenser->id,
+                    'image_url'      => $img,
+                    'description'    => $desc,
+                ]);
+            }
+        }
+        
 // === Meja ===
         $mejaProducts = [
             ['Informa Meja Kerja Minimalis', 1200000, 20, 'Meja kerja dengan desain modern dan laci penyimpanan.'],
