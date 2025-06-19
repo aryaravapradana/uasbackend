@@ -373,7 +373,7 @@ class ProductSeeder extends Seeder
             ]);
         }
 
-// === Dispenser ===
+        // === Dispenser ===
         if ($dispenser) {
             $products = [
                 ['Miyako Dispenser Panas & Normal WD-190', 200000, 50, 'Dispenser meja dengan 2 fungsi, panas dan normal, desain minimalis.'],
@@ -402,7 +402,7 @@ class ProductSeeder extends Seeder
             }
         }
         
-// === Meja ===
+        // === Meja ===
         $mejaProducts = [
             ['Informa Meja Kerja Minimalis', 1200000, 20, 'Meja kerja dengan desain modern dan laci penyimpanan.'],
             ['IKEA LINNMON / ADILS Meja Tulis', 499000, 60, 'Meja tulis simpel dan fungsional dari IKEA.'],
@@ -430,7 +430,7 @@ class ProductSeeder extends Seeder
             ]);
         }
 
-// === Kursi ===
+        // === Kursi ===
         $kursiProducts = [
             ['Informa Kursi Kantor Ergonomis', 950000, 30, 'Kursi kerja dengan sandaran punggung yang nyaman.'],
             ['Napolly Kursi Plastik Santai 209', 50000, 100, 'Kursi plastik tahan lama untuk berbagai keperluan.'],
@@ -515,7 +515,7 @@ class ProductSeeder extends Seeder
             ]);
         }
 
-// === Kipas ===
+        // === Kipas ===
         $kipasProducts = [
             ['Miyako Kipas Angin Berdiri 16 inci', 250000, 50, 'Kipas angin berdiri dengan 3 pilihan kecepatan.'],
             ['Cosmos Kipas Angin Dinding 16 inci', 280000, 40, 'Kipas angin tempel dinding dengan tali tarikan.'],
@@ -543,7 +543,7 @@ class ProductSeeder extends Seeder
             ]);
         }
 
-// === Kasur ===
+        // === Kasur ===
         $kasurProducts = [
             ['Inoac Kasur Busa No. 2 (160x200)', 1200000, 20, 'Kasur busa kepadatan tinggi dengan garansi anti kempes.'],
             ['Royal Foam Kasur Busa Single (90x200)', 700000, 30, 'Kasur busa ekonomis untuk satu orang.'],
@@ -571,7 +571,7 @@ class ProductSeeder extends Seeder
             ]);
         }
 
-// === Baju ===
+        // === Baju ===
         $bajuProducts = [
             ['Baju Cewek Cina Nuansa Merah', 185000, 45, 'Atasan wanita elegan dengan sentuhan tradisional Cina berwarna merah cerah.'],
             ['Baju Cewek Mini Kotak Kotak Pink', 95000, 70, 'Dress mini kasual motif kotak-kotak pink, cocok untuk gaya muda.'],
@@ -599,7 +599,7 @@ class ProductSeeder extends Seeder
             ]);
         }
 
-// === Celana ===
+        // === Celana ===
         $celanaProducts = [
             ['Celana Pendek Biru Terang', 85000, 70, 'Celana pendek pria warna biru terang, ringan dan nyaman untuk santai.'],
             ['Celana Pendek Jeans Modern', 120000, 55, 'Celana pendek jeans dengan desain modern, cocok untuk gaya kasual.'],
@@ -627,7 +627,7 @@ class ProductSeeder extends Seeder
             ]);
         }
 
-// === Sepatu ===
+        // === Sepatu ===
         $sepatuProducts = [
             ['Heels Hitam', 250000, 30, 'Sepatu heels klasik warna hitam, cocok untuk acara formal.'],
             ['Heels Hitam Bertali', 280000, 25, 'Sepatu heels hitam dengan detail tali, memberikan kesan elegan.'],
@@ -853,7 +853,7 @@ class ProductSeeder extends Seeder
             ]);
         }
 
-                // === Skincare ===
+        // === Skincare ===
         $skincareProducts = [
             ['Wardah White Secret Serum', 75000, 50, 'Serum pencerah wajah dengan Crystal White Active untuk kulit lebih cerah.'],
             ['Hanasui Power Bright Serum', 28000, 80, 'Serum pencerah dengan Niacinamide dan Vitamin C.'],
@@ -1133,6 +1133,7 @@ class ProductSeeder extends Seeder
         }
 
         // === Hobi ===
+
         // === Game ===
         $gameProducts = [
             ['Nintendo Switch OLED', 4500000, 10, 'Konsol game portabel dan TV mode dengan layar OLED yang cerah.'],
@@ -1669,6 +1670,7 @@ class ProductSeeder extends Seeder
                 'description' => $desc,
             ]);
         }
+        
         // Informasi selesai seeding
         $this->command->info('Seeding produk selesai! Total produk: ' . Product::count());         
     }

@@ -121,7 +121,6 @@ class ShopsController extends Controller
         $shopId = Shop::where('owner_id', $userId)->value('id');
 
         $products = Product::where('shop_id', $shopId)->paginate(10);
-        // dd($products);  
         return view('shop.productDashboard', ['productData' => $products]);
     }
 
