@@ -112,25 +112,21 @@ public function search(Request $request)
 
     $products = Product::query();
 
-    // ✅ FILTER BERDASARKAN SLUG SUBKATEGORI
     if (!empty($subcategorySlug)) {
         $products->whereHas('subcategory', function ($q) use ($subcategorySlug) {
             $q->where('slug', $subcategorySlug);
         });
     }
 
-    // ✅ FILTER NAMA SESUAI KEYWORDS
     foreach ($keywords as $keyword) {
         $products->whereRaw('LOWER(name) LIKE ?', ["%{$keyword}%"]);
     }
 
-    // ✅ OPSIONAL: tambahkan match deskripsi / subkategori name
     $products->orWhereRaw('LOWER(description) LIKE ?', ["%{$normalizedQuery}%"])
              ->orWhereHas('subcategory', function ($q) use ($normalizedQuery) {
                  $q->whereRaw('LOWER(name) LIKE ?', ["%{$normalizedQuery}%"]);
              });
 
-    // ✅ SORTING: relevansi
     $products->orderByRaw("POSITION(? IN LOWER(name))", [$normalizedQuery]);
 
     $results = $products->get();

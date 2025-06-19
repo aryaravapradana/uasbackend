@@ -55,7 +55,7 @@
             font-size: 0.95rem;
             transition: all 0.2s ease;
         ">
-            {{ strtoupper(substr(explode(' ', Auth::user()->name)[0], 0, 1) . (explode(' ', Auth::user()->name)[1] ?? '')[0] ?? '') }}
+             {{ Auth::user()->initial }}
 
         </div>
 

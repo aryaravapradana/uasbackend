@@ -95,14 +95,6 @@ class ShopsController extends Controller
 
     public function getHistoryAdmin(Shop $shop)
     {
-        // $owner = Shop::find($shop);
-        // $orderDatas = OrderItem::all();
-
-        // foreach($orderDatas as $orderData) {
-        //     if($orderData->product->shop_id) {
-        //         $owner = [$orderData];
-        //     }
-        // }
 
         $orderDatas = OrderItem::all();
         $filteredOrderData = [];
@@ -138,9 +130,6 @@ class ShopsController extends Controller
     }
 
     public function adminEditShop(Request $request, Shop $shop) {
-        // $shopId = $request->shopid
-        // $shop = Shop::find($shopId);
-        // // dd($shop);
         return view('shop.adminEditShop', ['shop' => $shop]);
     }
 }

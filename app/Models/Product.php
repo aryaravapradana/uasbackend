@@ -33,24 +33,17 @@ class Product extends Model
 
     public function shoppingCarts(): BelongsToMany
     {
-        // Asumsi ada tabel pivot 'cart_product' dengan 'shopping_cart_id' dan 'product_id'
-        // Kamu mungkin perlu membuat model CartItem untuk detail seperti quantity.
+
         return $this->belongsToMany(ShoppingCart::class, 'cart_product')
-                    ->withPivot('quantity', 'price') // Contoh jika ada detail di pivot
+                    ->withPivot('quantity', 'price')
                     ->withTimestamps();
     }
 
-    /**
-     * Relasi ke Pesanan (Many-to-Many).
-     * Produk bisa ada di banyak pesanan, dan pesanan bisa punya banyak produk.
-     * Ini biasanya melalui tabel pivot 'order_product' atau 'order_items'.
-     */
     public function orders(): BelongsToMany
     {
-        // Asumsi ada tabel pivot 'order_product' dengan 'order_id' dan 'product_id'
-        // Kamu mungkin perlu membuat model OrderItem untuk detail seperti quantity dan harga saat itu.
+
         return $this->belongsToMany(Order::class, 'order_product')
-                    ->withPivot('quantity', 'price') // Contoh jika ada detail di pivot
+                    ->withPivot('quantity', 'price')
                     ->withTimestamps();
     }
 
